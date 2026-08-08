@@ -3,118 +3,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TOYOTA AUTO PARTS & HERITAGE - ศูนย์รวมอะไหล่โตโยต้าทุกยุคสมัย</title>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <title>TOYOTA HILUX REVO 2018 - คลังอะไหล่แท้ระดับพรีเมียม</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07090e;
-      --card-bg: rgba(18, 26, 43, 0.65);
-      --red: #ff2a4b;
+      --bg: #05070f;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --red: #ff0055;
       --cyan: #00f2fe;
       --gold: #ffb703;
-      --text: #f1f5f9;
+      --green: #10b981;
+      --purple: #8b5cf6;
+      --text: #f8fafc;
       --muted: #94a3b8;
-      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --neon-glow: 0 0 15px rgba(0, 242, 254, 0.3);
     }
-    * { box-sizing: border-box; font-family: 'Kanit', sans-serif; transition: 0.2s ease; }
-    body { margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; background-image: radial-gradient(at 0% 0%, #1e1b4b 0px, transparent 50%), radial-gradient(at 100% 100%, #172554 0px, transparent 50%); background-attachment: fixed; }
+
+    * { box-sizing: border-box; font-family: 'Kanit', sans-serif; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
     
-    header { background: rgba(7, 9, 14, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; position: sticky; top: 0; z-index: 99; }
-    .logo { cursor: pointer; }
-    .logo h2 { margin: 0; font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #fff, var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .logo p { margin: 0; font-size: 10px; color: var(--muted); }
-    
-    nav { display: flex; gap: 6px; }
-    nav a { color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; }
-    nav a:hover, nav a.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
+    body {
+      margin: 0; background: var(--bg); color: var(--text); min-height: 100vh;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 0, 85, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 242, 254, 0.15) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
+    }
 
-    .header-actions { display: flex; align-items: center; gap: 8px; }
-    .search-box input { padding: 8px 14px; border-radius: 20px; border: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.8); color: #fff; outline: none; width: 160px; font-size: 12px; }
-    .search-box input:focus { width: 200px; border-color: var(--cyan); box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
-    .btn-act { border: none; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    .btn-google { background: #ea4335; }
-    .btn-cart { background: linear-gradient(135deg, var(--red), #b91c1c); box-shadow: 0 4px 15px rgba(255, 42, 75, 0.3); }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
 
-    .container { padding: 20px 5%; max-width: 1300px; margin: 0 auto; }
-    .hero { background: linear-gradient(135deg, rgba(255, 42, 75, 0.1), rgba(0, 242, 254, 0.1)); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; margin-bottom: 20px; text-align: center; }
-    .hero h1 { margin: 0 0 6px; font-size: 24px; color: #fff; }
-    .hero p { margin: 0; color: var(--muted); font-size: 13px; }
+    header {
+      background: rgba(5, 7, 15, 0.85); backdrop-filter: blur(25px);
+      border-bottom: 1px solid var(--glass-border); padding: 12px 5%;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 15px; position: sticky; top: 0; z-index: 99;
+    }
 
-    .categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; }
-    .cat-btn { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--muted); padding: 8px 16px; border-radius: 30px; cursor: pointer; white-space: nowrap; font-size: 12px; }
-    .cat-btn.active, .cat-btn:hover { background: var(--cyan); color: #000; font-weight: 700; border-color: var(--cyan); box-shadow: 0 0 12px rgba(0, 242, 254, 0.4); }
+    .logo { cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .logo-icon { font-size: 28px; filter: drop-shadow(0 0 8px var(--red)); }
+    .logo h2 { margin: 0; font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 30%, var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo p { margin: 0; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
 
-    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
-    .card { background: var(--card-bg); backdrop-filter: blur(15px); border-radius: 16px; border: 1px solid var(--glass-border); overflow: hidden; display: flex; flex-direction: column; position: relative; }
-    .card:hover { transform: translateY(-6px); border-color: var(--cyan); box-shadow: 0 12px 25px rgba(0, 242, 254, 0.15); }
-    
-    .card-badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: var(--gold); border: 1px solid var(--gold); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 12px; backdrop-filter: blur(4px); z-index: 2; }
-    .card-img-wrapper { width: 100%; height: 160px; background: #0f172a; overflow: hidden; position: relative; }
+    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .search-box { position: relative; }
+    .search-box input {
+      padding: 9px 16px 9px 36px; border-radius: 30px; border: 1px solid var(--glass-border);
+      background: rgba(15, 23, 42, 0.9); color: #fff; outline: none; width: 180px; font-size: 12px;
+    }
+    .search-box input:focus { width: 220px; border-color: var(--cyan); box-shadow: var(--neon-glow); }
+    .search-box::before { content: "🔍"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.6; }
+
+    .btn-act {
+      border: none; color: #fff; padding: 9px 16px; border-radius: 30px;
+      font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+    }
+    .btn-wishlist { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border); }
+    .btn-wishlist:hover { background: rgba(255, 0, 85, 0.2); border-color: var(--red); }
+    .btn-admin { background: linear-gradient(135deg, var(--purple), #4f46e5); display: none; }
+    .btn-cart { background: linear-gradient(135deg, var(--red), #c0392b); box-shadow: 0 4px 20px rgba(255, 0, 85, 0.4); }
+    .btn-cart:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 0, 85, 0.6); }
+
+    .btn-mode-toggle { background: rgba(255,255,255,0.05); border: 1px dashed var(--cyan); color: var(--cyan); font-size: 11px; padding: 6px 12px; border-radius: 20px; cursor: pointer; }
+
+    .container { padding: 25px 5%; max-width: 1400px; margin: 0 auto; }
+    .hero { background: linear-gradient(135deg, rgba(255, 0, 85, 0.12), rgba(0, 242, 254, 0.12)); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; margin-bottom: 25px; text-align: center; position: relative; overflow: hidden; }
+    .hero h1 { margin: 0 0 8px; font-size: 28px; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+    .hero p { margin: 0 0 20px; color: var(--muted); font-size: 14px; position: relative; z-index: 1; }
+
+    .contact-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .contact-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 30px; text-decoration: none; color: #fff; font-size: 12px; font-weight: 500; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); }
+    .contact-btn:hover { transform: translateY(-3px); background: rgba(255,255,255,0.15); }
+    .contact-btn.phone { border-color: var(--gold); color: var(--gold); }
+    .contact-btn.fb { border-color: #1877f2; color: #60a5fa; }
+    .contact-btn.line { border-color: #00b900; color: #4ade80; }
+
+    .shipping-info-box { margin-top: 20px; padding: 10px 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 30px; display: inline-block; font-size: 12px; color: #a7f3d0; position: relative; z-index: 1; }
+
+    .categories { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 25px; }
+    .cat-btn { background: rgba(255, 255, 255, 0.03); border: 1px solid var(--glass-border); color: var(--muted); padding: 10px 20px; border-radius: 30px; cursor: pointer; white-space: nowrap; font-size: 13px; font-weight: 500; }
+    .cat-btn.active, .cat-btn:hover { background: var(--cyan); color: #000; font-weight: 700; border-color: var(--cyan); box-shadow: 0 0 20px rgba(0, 242, 254, 0.5); transform: translateY(-2px); }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 22px; }
+    .card { background: var(--card-bg); backdrop-filter: blur(20px); border-radius: 20px; border: 1px solid var(--glass-border); overflow: hidden; display: flex; flex-direction: column; position: relative; }
+    .card:hover { transform: translateY(-8px) scale(1.01); border-color: var(--cyan); box-shadow: 0 15px 35px rgba(0, 242, 254, 0.2); }
+    .card-badge { position: absolute; top: 12px; left: 12px; background: rgba(5, 7, 15, 0.85); color: var(--gold); border: 1px solid var(--gold); font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; backdrop-filter: blur(8px); z-index: 2; }
+    .card-fav-btn { position: absolute; top: 12px; right: 12px; background: rgba(5, 7, 15, 0.85); border: 1px solid var(--glass-border); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; font-size: 14px; }
+    .card-fav-btn.active { color: var(--red); border-color: var(--red); background: rgba(255, 0, 85, 0.2); }
+
+    .card-img-wrapper { width: 100%; height: 180px; background: #0f172a; overflow: hidden; position: relative; cursor: pointer; }
     .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
-    .card:hover img { transform: scale(1.05); opacity: 1; }
+    .card:hover .card-img-wrapper img { transform: scale(1.08); opacity: 1; }
+    .card-img-wrapper::after { content: "🔍 คลิกเพื่อขยายรูป"; position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 11px; text-align: center; padding: 4px 0; opacity: 0; transition: opacity 0.25s; }
+    .card-img-wrapper:hover::after { opacity: 1; }
 
-    .card-info { padding: 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
-    .card-title { margin: 0; font-size: 14px; font-weight: 600; color: #fff; line-height: 1.3; }
-    .compatibility { font-size: 11px; color: var(--cyan); line-height: 1.2; }
-    .price-tag { color: var(--gold); font-size: 16px; font-weight: 700; }
+    .card-info { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+    .card-title { margin: 0; font-size: 15px; font-weight: 600; color: #fff; line-height: 1.4; }
+    .compatibility { font-size: 11px; color: var(--cyan); }
+    .price-tag { color: var(--gold); font-size: 18px; font-weight: 700; text-shadow: 0 0 10px rgba(255, 183, 3, 0.3); }
 
-    .card-btns { display: flex; gap: 6px; }
-    .btn { flex: 1; padding: 8px; border: none; border-radius: 8px; font-weight: 600; font-size: 11px; cursor: pointer; text-align: center; }
-    .btn-detail { background: rgba(255, 255, 255, 0.08); color: #fff; }
-    .btn-detail:hover { background: rgba(255, 255, 255, 0.18); }
-    .btn-add { background: linear-gradient(135deg, var(--red), #c0392b); color: #fff; }
-    .btn-add:hover { opacity: 0.9; }
+    .card-btns { display: flex; gap: 8px; }
+    .btn { flex: 1; padding: 9px; border: none; border-radius: 10px; font-weight: 600; font-size: 12px; cursor: pointer; text-align: center; }
+    .btn-detail { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid var(--glass-border); }
+    .btn-detail:hover { background: rgba(255, 255, 255, 0.2); }
+    .btn-add { background: linear-gradient(135deg, var(--red), #c0392b); color: #fff; box-shadow: 0 4px 12px rgba(255, 0, 85, 0.3); }
+    .btn-add:hover { opacity: 0.95; transform: scale(1.02); }
 
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; }
-    .modal-overlay.active { display: flex; }
-    .modal-box { background: #0f172a; border: 1px solid var(--glass-border); border-radius: 20px; width: 90%; max-width: 450px; padding: 20px; position: relative; max-height: 85vh; overflow-y: auto; color: #fff; }
-    .modal-close { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; }
+    /* Modal System */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-box { background: #0d1322; border: 1px solid var(--glass-border); border-radius: 24px; width: 92%; max-width: 520px; padding: 24px; position: relative; max-height: 88vh; overflow-y: auto; color: #fff; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+    .modal-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; }
 
-    .cart-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 8px 10px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; }
-    .cart-item-img { width: 45px; height: 45px; border-radius: 6px; object-fit: cover; background: #07090e; flex-shrink: 0; }
+    .img-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .img-modal-overlay.active { opacity: 1; visibility: visible; }
+    .img-modal-content { position: relative; max-width: 90%; max-height: 85vh; display: flex; flex-direction: column; align-items: center; transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .img-modal-overlay.active .img-modal-content { transform: scale(1); }
+    .img-modal-content img { max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 242, 254, 0.3); border: 1px solid var(--glass-border); }
+    .img-modal-caption { margin-top: 15px; color: #fff; font-size: 16px; font-weight: 500; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+    .img-modal-close { position: absolute; top: -45px; right: 0; background: rgba(255, 255, 255, 0.2); border: 1px solid var(--glass-border); color: #fff; font-size: 20px; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .img-modal-close:hover { background: var(--red); }
+
+    .cart-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 12px; margin-bottom: 10px; font-size: 12px; border: 1px solid var(--glass-border); }
+    .cart-item-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
     .cart-item-info { flex-grow: 1; }
-    .cart-btn-qty { background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 4px; width: 22px; height: 22px; cursor: pointer; font-weight: bold; }
-    
-    .form-group { margin-bottom: 10px; text-align: left; }
-    .form-group label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
-    .form-group input { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--glass-border); background: #07090e; color: #fff; font-size: 12px; }
+    .cart-btn-qty { background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 6px; width: 24px; height: 24px; cursor: pointer; font-weight: bold; }
 
-    footer { background: #04060a; border-top: 1px solid var(--glass-border); padding: 20px 5%; margin-top: 40px; text-align: center; color: var(--muted); font-size: 12px; }
+    .form-group { margin-bottom: 12px; text-align: left; }
+    .form-group label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+    .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: #05070f; color: #fff; font-size: 12px; outline: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--cyan); box-shadow: var(--neon-glow); }
+
+    /* Custom Payment & Shipping Tabs (เพิ่มลูกเล่นการจัดส่งและการชำระเงิน) */
+    .pay-tabs { display: flex; gap: 8px; margin: 10px 0; }
+    .pay-tab { flex: 1; padding: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); border-radius: 10px; color: #fff; font-size: 11px; cursor: pointer; text-align: center; }
+    .pay-tab.active { background: linear-gradient(135deg, var(--cyan), #00b900); color: #000; font-weight: bold; border-color: var(--cyan); }
+    .ship-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px; margin-top: 10px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; }
+    .copy-btn { background: var(--cyan); color: #000; border: none; padding: 4px 10px; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 10px; }
+
+    #toast { position: fixed; bottom: 20px; right: 20px; background: rgba(16, 185, 129, 0.9); color: #fff; padding: 12px 20px; border-radius: 30px; font-size: 13px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 2000; }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    .admin-order-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-left: 4px solid var(--cyan); border-radius: 12px; padding: 14px; margin-bottom: 12px; font-size: 12px; }
+    .admin-order-header { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--glass-border); padding-bottom: 6px; margin-bottom: 8px; }
+
+    footer { background: #030408; border-top: 1px solid var(--glass-border); padding: 30px 5%; margin-top: 50px; text-align: center; color: var(--muted); font-size: 12px; }
+    .footer-contacts { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; flex-wrap: wrap; }
+    .footer-contacts a { color: var(--text); text-decoration: none; font-size: 13px; }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo" onclick="showHome()">
-      <h2>⚙️ TOYOTA PRO PARTS</h2>
-      <p>ศูนย์คลังอะไหล่โตโยต้า คลาสสิก เรโทร ถึง รุ่นปัจจุบัน</p>
+    <div class="logo" onclick="renderProducts()">
+      <span class="logo-icon">⚙️</span>
+      <div>
+        <h2>REVO 2018 PARTS</h2>
+        <p>ศูนย์รวมอะไหล่แท้ TOYOTA HILUX REVO 2018</p>
+      </div>
     </div>
-    <nav>
-      <a href="#" id="nav-home" class="active" onclick="showHome()">คลังอะไหล่</a>
-      <a href="#" id="nav-promo" onclick="showPromo()">คำแนะนำสั่งซื้อ</a>
-      <a href="#" id="nav-contact" onclick="showContact()">ติดต่อเรา</a>
-    </nav>
     <div class="header-actions">
       <div class="search-box">
-        <input type="text" id="searchInput" placeholder="ค้นหาอะไหล่/รุ่น เช่น 4AGE, โช๊ค..." onkeyup="liveSearch()">
+        <input type="text" id="searchInput" placeholder="ค้นหาอะไหล่..." onkeyup="liveSearch()">
       </div>
-      <button class="btn-act btn-google" onclick="searchGoogle()">🌐 Google</button>
-      <button class="btn-act btn-cart" onclick="openCart()">🛒 ใบสั่งซื้อ (<span id="cartCount">0</span>)</button>
+      <button class="btn-act btn-wishlist" onclick="openWishlist()">❤️ (<span id="wishCount">0</span>)</button>
+      <button class="btn-act btn-admin" id="adminBtn" onclick="verifyAdminAndOpen()">🛠️ หลังบ้าน (<span id="adminBadge">0</span>)</button>
+      <button class="btn-act btn-cart" onclick="openCart()">🛒 ตระกร้า (<span id="cartCount">0</span>)</button>
+      <button class="btn-mode-toggle" id="toggleRoleBtn" onclick="toggleRole()">🔒 มุมมอง: ลูกค้า</button>
     </div>
   </header>
 
-  <div class="container" id="pageContent">
+  <div class="container">
     <div class="hero">
-      <h1>🛠️ TOYOTA HERITAGE & MODERN PARTS ARCHIVE</h1>
-      <p>คัดสรรอะไหล่แท้ / อะไหล่เทียบพรีเมียม / อะไหล่ตกแต่งพิเศษ พร้อมคำแนะนำเชิงช่างกว่า 50 รายการ</p>
+      <h1>🛻 TOYOTA HILUX REVO 2018 SPECIFIC PARTS CENTER</h1>
+      <p>คลังอะไหล่แท้ศูนย์ & เกรดพรีเมียมสมรรถนะสูง สำหรับ Hilux Revo 2018 (2.4 / 2.8 D-4D) พร้อมคำแนะนำจากช่างมืออาชีพ</p>
+      <div class="contact-bar">
+        <a href="tel:0981813465" class="contact-btn phone">📞 098-181-3465</a>
+        <a href="https://web.facebook.com/bxl.na.503768" target="_blank" class="contact-btn fb">📘 Facebook ติดต่อสอบถาม</a>
+        <span class="contact-btn line">💬 LINE ID: Ball4533_</span>
+      </div>
+      <div class="shipping-info-box">
+        🚚 <b>รอบจัดส่งสินค้า:</b> ตัดรอบส่ง 14:00 น. ทุกวันจันทร์ - เสาร์ (สั่งหลัง 14:00 น. ส่งวันถัดไป) | กทม.-ปริมณฑล 1-2 วัน / ต่างจังหวัด 2-3 วัน
+      </div>
     </div>
 
     <div class="categories">
-      <button class="cat-btn active" onclick="filterCategory('all', this)">🔥 ทั้งหมด (50 รายการ)</button>
-      <button class="cat-btn" onclick="filterCategory('engine', this)">🔩 เครื่องยนต์ / ระบบส่งกำลัง</button>
-      <button class="cat-btn" onclick="filterCategory('suspension', this)">🏎️ ช่วงล่าง / เบรก / ล้อ</button>
-      <button class="cat-btn" onclick="filterCategory('body', this)">🚘 ตัวถัง / อุปกรณ์ภายนอก</button>
-      <button class="cat-btn" onclick="filterCategory('electric', this)">⚡ ระบบไฟ / อิเล็กทรอนิกส์ / EV</button>
+      <button class="cat-btn active" onclick="filterCategory('all', this)">🔥 ทั้งหมด (30)</button>
+      <button class="cat-btn" onclick="filterCategory('brake', this)">🛑 ระบบเบรก</button>
+      <button class="cat-btn" onclick="filterCategory('engine', this)">🔩 เครื่องยนต์ / กรอง</button>
+      <button class="cat-btn" onclick="filterCategory('suspension', this)">🏎️ ช่วงล่าง / ซับแมค</button>
+      <button class="cat-btn" onclick="filterCategory('electric', this)">⚡ ระบบไฟ / เซนเซอร์</button>
+      <button class="cat-btn" onclick="filterCategory('body', this)">🚗 ตัวถัง / ของแต่ง</button>
     </div>
 
     <div class="products-grid" id="productsGrid"></div>
@@ -127,168 +209,150 @@
     </div>
   </div>
 
+  <div class="img-modal-overlay" id="imgModal" onclick="closeImgModal(event)">
+    <div class="img-modal-content" onclick="event.stopPropagation()">
+      <button class="img-modal-close" onclick="closeImgModal()">✕</button>
+      <img id="imgModalSrc" src="" alt="ขยายรูปภาพ">
+      <div class="img-modal-caption" id="imgModalCaption"></div>
+    </div>
+  </div>
+
+  <div id="toast">บันทึกเรียบร้อยแล้ว</div>
+
   <footer>
-    <p>© 2026 TOYOTA PRO PARTS THAILAND | โทร: 098-181-3465 | Line: ball4533_ | FB: บอล</p>
+    <div class="footer-contacts">
+      <a href="tel:0981813465">📞 โทร: 098-181-3465</a>
+      <a href="https://web.facebook.com/bxl.na.503768" target="_blank">📘 Facebook ติดต่อสอบถาม</a>
+      <span style="color: var(--cyan);">💬 LINE ID: Ball4533_</span>
+    </div>
+    <p>© 2026 TOYOTA HILUX REVO 2018 PARTS CENTER | ตัดรอบจัดส่งสินค้าประจำวันเวลา 14:00 น.</p>
   </footer>
 
   <script>
-    // รูปภาพสำรองกรณีเครือข่ายโหลดรูปไม่ทัน
     const fallbackImg = 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop';
+    const ADMIN_PIN = "1234";
+    let isOwnerMode = false;
 
-    // รายการ URL รูปภาพที่ระบุเฉพาะชิ้นตามประเภทสินค้าจริง
-    const specificImages = {
-      1: 'https://img1.pic.in.th/images/images4c678126358ec7e4.jpg', // Gasket / Engine Part
-      2: 'https://img2.pic.in.th/images-1d463f9c028fc3b6f.jpg', // Suspension
-      3: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop', // Carburetor / Classic Engine
-      4: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Brembo Brakes
-      5: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500&auto=format&fit=crop', // Carbon Hood / Car
-      6: 'https://images.unsplash.com/photo-1558441719-443b38631ad9?w=500&auto=format&fit=crop', // HV Battery
-      7: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=500&auto=format&fit=crop', // Wire Tuck
-      8: 'https://images.unsplash.com/photo-1621285853634-713b8dd6b5fd?w=500&auto=format&fit=crop', // Turbocharger
-      9: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Twin Plate Clutch
-      10: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=500&auto=format&fit=crop', // Polyurethane Bushing
-      11: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop', // Pop-up Headlight
-      12: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=500&auto=format&fit=crop', // Classic Bullet Mirror
-      13: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // ECU Board
-      14: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Axle LSD
-      15: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop', // Dashboard
-      16: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop', // Intercooler
-      17: 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=500&auto=format&fit=crop', // Nardi Steering Wheel
-      18: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // Radiator
-      19: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=500&auto=format&fit=crop', // Fuel Pump
-      20: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop', // LED Taillight
-      21: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Camber Kit
-      22: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Injectors
-      23: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Brake Cylinder
-      24: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=500&auto=format&fit=crop', // Wiring Cable
-      25: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500&auto=format&fit=crop', // Weatherstrip
-      26: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Differential Gear
-      27: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Ignition Coil
-      28: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // Water Pump
-      29: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&auto=format&fit=crop', // Skid Plate
-      30: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Throttle Controller
-      31: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Exhaust Pipe
-      32: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Steering Rack
-      33: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // AC Compressor
-      34: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Clutch Disc
-      35: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=500&auto=format&fit=crop', // Wheel Spacer
-      36: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Brake Pad
-      37: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop', // EV Charger
-      38: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&auto=format&fit=crop', // Offroad Bumper
-      39: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Oil Pan
-      40: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Lowering Springs
-      41: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Fuse Box
-      42: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop', // LPG System
-      43: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=500&auto=format&fit=crop', // Engine Mount
-      44: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&auto=format&fit=crop', // Roof Rack
-      45: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Air Filter
-      46: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // Timing Belt
-      47: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Power Switch
-      48: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop', // Retro Fog Light
-      49: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Silicone Hose
-      50: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop'  // Car Mat 6D
-    };
-
-    // [0:id, 1:name, 2:cat, 3:price, 4:badge, 5:compat, 6:keyword, 7:advice, 8: custom_image_url]
-    const rawData = [
-      [1, "ชุดประเก็นยกชุด เครื่อง 4A-GE 16V/20V", "engine", 3800, "OEM แท้", "AE86, AE101, MR2 AW11", "gasket,engine", "คำแนะนำ: ควรใช้ปอนด์ปันน็อตฝาสูบตามสเปกโรงงาน (29 Nm + 90° + 90°) เพื่อป้องกันประเก็นแลบยามใช้รอบสูง"],
-      [2, "โช๊คอัพสตรัทปรับเกลียว GR Suspension Kit", "suspension", 42000, "GR Performance", "GR Yaris, GR86, GR Supra", "suspension,car", "คำแนะนำ: สามารถปรับระดับความแข็ง-อ่อนได้ 30 ระดับ เหมาะสำหรับสตรีทใช้งานประจำวันและแทร็กเดย์"],
-      [3, "คาร์บูเรเตอร์คู่ Mikuni Solex 40mm", "engine", 35000, "Rare Retro", "Celica TA22, Corolla KE30, Publica", "carburetor", "คำแนะนำ: เหมาะสำหรับเครื่องยนต์ตระกูล T และ K สายเรโทร ควรจูนแรงดันน้ำมันเบนซินไม่เกิน 3.5 PSI"],
-      [4, "จานเบรกขยาย + คาลิเปอร์ Brembo GT 6-Pot", "suspension", 68000, "High Power", "Fortuner, Revo, Land Cruiser 300", "brakes,car", "คำแนะนำ: ต้องใช้ร่วมกับล้อแม็กขอบ 18 นิ้วขึ้นไป เพื่อหลบระยะก้านเบรก ช่วยระยะเบรกสั้นลงชัดเจน"],
-      [5, "ฝากระโปรงคาร์บอนไฟเบอร์ทรง OEM", "body", 18500, "Carbon Pure", "AE86, JZA80 Supra, Yaris Ativ", "hood,car", "คำแนะนำ: น้ำหนักเบากว่าฝาเดิม 60% ควรลงเคลือบเงา UV Clear Coat เพิ่มเติมเพื่อยืดอายุการใช้งานกลางแจ้ง"],
-      [6, "แบตเตอรี่ไฮบริด HV Battery Module", "electric", 52000, "Factory Warranty", "Prius XW30, Camry AHV40/50, Cross", "battery,car", "คำแนะนำ: สินค้าประกันศูนย์ 2 ปี ควรทำความสะอาดพัดลมเป่าระบายความร้อนแบตเตอรี่ทุกๆ 20,000 กม."],
-      [7, "ชุดสายไฟหน้าเครื่อง Custom Wire Tuck", "electric", 8500, "Handmade", "KE70, RT100, DX, Corona", "wires,engine", "คำแนะนำ: สายไฟเกรดทนความร้อนสูง ป้องกันหนูกัดและไฟรั่ว สำหรับรถคลาสสิกที่ต้องการห้องเครื่องคลีนๆ"],
-      [8, "เทอร์โบชาร์จเจอร์ HKS GTIII-RS", "engine", 59000, "Tuning Grade", "Supra JZA80 (2JZ-GTE), Chaser JZX100", "turbo,engine", "คำแนะนำ: รองรับแรงม้าสูงสุด 500HP+ แนะนำเปลี่ยนปั๊มพอยต์เบนซินและหัวฉีดขนาด 800cc ขึ้นไป"],
-      [9, "ชุดคลัตช์สองแผ่น OS Giken Twin Plate", "engine", 46000, "Racing Part", "Supra, MR2 SW20, GR Yaris", "clutch,car", "คำแนะนำ: ทนทานแรงบิดสูง เหมาะกับรถเซ็ตเทอร์โบแรงม้าสูง อาจมีเสียงดังกรุ๊งกริ๊งขณะเหยียบคลัตช์ซึ่งเป็นเรื่องปกติ"],
-      [10, "ลูกหมากและบูชช่วงล่างโพลียูรีเทน ทั้งคัน", "suspension", 12500, "Heavy Duty", "Vigo, Fortuner, Tiger, Commuter", "bushing,car", "คำแนะนำ: ให้ความหนึบและคมในการเลี้ยวมากกว่ายางเดิมโรงงาน อายุกระด้างยาวนานกว่า 5 ปี"],
-      [11, "ชุดไฟหน้า Pop-up Complete Set", "electric", 28000, "NOS (New Old Stock)", "Celica A60, MR2 AW11/SW20, AE86", "headlight", "คำแนะนำ: มาพร้อมมอเตอร์และชุดสายไฟตรงรุ่น ควรทาจารบีขาวที่มอเตอร์เฟืองยกก่อนติดตั้ง"],
-      [12, "กระจกมองข้างทรงกระสุน Chrome Bullet Mirror", "body", 4500, "Vintage Style", "Toyota 2000GT, Sports 800, TA22", "mirror,car", "คำแนะนำ: งานชุบโครเมียมเกรดสะสม ไม่เป็นสนิมง่าย ปรับมุมมองได้กว้างเหมาะติดแก้มข้างตัวถัง"],
-      [13, "กล่องควบคุมเครื่องยนต์ ECUMASTER EMU Black", "electric", 39000, "Standalone ECU", "ทุกรุ่นที่วางเครื่อง 1JZ, 2JZ, 3S, 4AGE", "circuitboard", "คำแนะนำ: กล่องสแตนด์อโลน ปรับจูนรายละเอียดน้ำมันและองศาจุดระเบิดได้ละเอียดยิบ โดยช่างจูนเนอร์"],
-      [14, "เพลาลอยแต่งทรงถึก + เฟืองท้าย Limited Slip (LSD)", "suspension", 29000, "Off-Road & Drift", "Hilux RN10, Hero, Tiger, Revo", "axle,car", "คำแนะนำ: สำหรับรถสายบรรทุกหนัก หรือสายดริฟต์ปั่นสองล้อเท่ากัน ต้องใช้น้ำมันเฟืองท้ายเกรด LSD เท่านั้น"],
-      [15, "แผงคอนโซลหน้า OEM Repro Standard", "body", 14500, "Restoration", "Corolla KE70 / TE71, DX", "dashboard", "คำแนะนำ: งานฉีดขึ้นรูปพลาสติก ABS เกรดทนแดด ทนความร้อนสูง แก้ปัญหาคอนโซลเดิมแตกลายงา"],
-      [16, "อินเตอร์คูลเลอร์หนา 3 นิ้ว + ท่ออลูมิเนียมดัด", "engine", 11500, "Cooling System", "Hilux Revo, Fortuner 2.8, Vigo D4D", "intercooler", "คำแนะนำ: ช่วยลดอุณหภูมิไอดีเข้าเครื่องยนต์ อัตราเร่งดีขึ้นต่อเนื่องโดยเฉพาะตอนขับทางไกลแดดจัด"],
-      [17, "พวงมาลัยสปอร์ต Nardi Classic Leather 330mm", "body", 9800, "Interior Classic", "ทุกรุ่นของ Toyota (ใช้คอตรงรุ่น)", "steering", "คำแนะนำ: พวงมาลัยหนังแท้เย็บด้ายแดง จับกระชับมือ เหมาะกับทั้งรถซิ่งยุค 90s และรถคลาสสิก"],
-      [18, "หม้อน้ำอลูมิเนียม 3 ช่อง + พัดลมไฟฟ้า High Speed", "engine", 6500, "Extreme Cooling", "Camry ACV30/40, Wish, Alphard", "radiator", "คำแนะนำ: แก้ปัญหาความร้อนสะสมในเมือง จราจรติดขัด ควรใช้น้ำยาคูลแลนท์แท้ TOYOTA เติมผสม"],
-      [19, "ชุดปั๊มเชื้อเพลิงแรงดันสูง Walbro 450 LPH", "engine", 5800, "E85 Fuel Ready", "ทุกรุ่นที่เซ็ตเทอร์โบ หรือใช้ E85", "pump,fuel", "คำแนะนำ: รองรับน้ำมัน E85 ได้ 100% ป่ายน้ำมันทันทุกรอบเครื่องยนต์ ควรเปลี่ยนกรองเบนซินพร้อมกัน"],
-      [20, "ไฟท้ายแต่ง LED Sequential Style", "electric", 8900, "Modern Look", "Corolla Cross, C-HR, Yaris Ativ", "taillight", "คำแนะนำ: ไฟเลี้ยววิ่งแบบไฟไลท์บาร์ Plug & Play ไม่ต้องตัดต่อสายไฟเดิมของตัวรถ"],
-      [21, "ชุดช่วงล่างปีกนกปรับองศา Camber Kit", "suspension", 9500, "Stance & Track", "Altezza SXE10, GT86, GR86", "camber,wheel", "คำแนะนำ: ปรับตั้งมุมล้อ ลบ-บวก ได้ตามต้องการ สำหรับรถโหลดเตี้ยที่ต้องการตั้งศูนย์ล้อให้กินยางเรียบ"],
-      [22, "หัวฉีดเบนซิน Denso 550cc (Set 4 หัว)", "engine", 7200, "High Flow", "1NZ-FE, 2NR-FE, 3S-GE", "injector", "คำแนะนำ: ฉีดจ่ายน้ำมันเป็นฝอยรายละเอียด ช่วยให้การเผาไหม้สมบูรณ์ เหมาะสำหรับรถทำเครื่องยนต์โมดิฟาย"],
-      [23, "ปั๊มเบรกบน Master Cylinder ขนาดใหญ่", "suspension", 4200, "Safety Upgrade", "Crown MS65, RT40, Hilux RN20", "cylinder,brake", "คำแนะนำ: ช่วยเพิ่มแรงดันน้ำมันเบรก สำหรับรถคลาสสิกที่อัปเกรดดิสก์เบรกหน้ามาแล้ว ให้แป้นเบรกลึกกำลังดี"],
-      [24, "สายไฟ plug-and-play มอเตอร์พัดลมแอร์ / หม้อน้ำ", "electric", 850, "Genuine Spare", "Vios, Yaris, Altis, Sienta", "connector,cable", "คำแนะนำ: แก้ปัญหาปลั๊กเดิมกรอบแตกจากความร้อนสะสม เสียบเปลี่ยนแทนของเดิมได้ทันที"],
-      [25, "ยางขอบประตู และขอบกระจกรอบคัน", "body", 5500, "Weatherstrip Set", "Celica TA22, Corona RT80, KE30", "rubber,seal", "คำแนะนำ: ยางสังเคราะห์ตรงรุ่น ป้องกันเสียงลมและน้ำรั่วซึมเข้าห้องโดยสารได้อย่างดีเยี่ยม"],
-      [26, "เฟืองท้ายสปีดสูง 3.9 / 4.1 Ratio", "suspension", 16500, "Cruising Speed", "Commuter, Ventury, Hilux Champ", "gear,diff", "คำแนะนำ: ช่วยลดรอบเครื่องยนต์ขณะวิ่งทางไกล ประหยัดน้ำมันเชื้อเพลิง เสียงห้องโดยสารเงียบลง"],
-      [27, "คอยล์จุดระเบิด High Energy Ignition (Set 4 หัว)", "electric", 6800, "Performance Ignition", "Vios NCP42/91, Altis, C-HR", "coil,ignition", "คำแนะนำ: ให้ไฟจุดระเบิดแรงและสม่ำเสมอ แก้อาการเครื่องยนต์เดินเบาสั่น เครื่องสะดุด อัตราเร่งลื่นไหล"],
-      [28, "ปั๊มน้ำเครื่องยนต์ + วาล์วน้ำ 76°C Low Temp", "engine", 3200, "Cooling Maintenance", "1JZ-GTE, 2JZ-GTE, 1UZ-FE", "waterpump", "คำแนะนำ: วาล์วน้ำเปิดเร็วขึ้น ช่วยให้น้ำวนระบายความร้อนได้เร็วกว่าเดิม เหมาะกับเมืองไทย"],
-      [29, "การ์ดกันกระแทกใต้ท้องรถ อลูมิเนียม 4mm", "body", 6900, "Overland Protection", "Fortuner, Land Cruiser Prado, Revo", "skidplate", "คำแนะนำ: ปกป้องอ่างน้ำมันเครื่องและเกียร์จากการกระแทกหินหรือตอไม้ สายลุยแคมป์ปิ้งไม่ควรพลาด"],
-      [30, "กล่องคันเร่งไฟฟ้า Drive Mode 9 ระดับ", "electric", 2900, "Plug & Play", "Revo, Fortuner, Yaris Ativ, Cross", "pedal,drive", "คำแนะนำ: ขจัดอาการคันเร่งหน่วง อัตราเร่งตอบสนองทันใจ ติดตั้งง่ายไม่ตัดต่อสายไฟ ไม่หลุดประกันศูนย์"],
-      [31, "ท่อไอเสียสแตนเลสทั้งเส้น + หม้อพักปลาย", "engine", 15500, "Exhaust System", "GT86, GR86, Yaris 1.2", "exhaust,pipe", "คำแนะนำ: ดัดด้วยเครื่อง CNC เสียงนุ่มแน่น ไม่ดังรบกวน ช่วยระบายไอเสียได้ไหลลื่นขึ้น"],
-      [32, "แร็คพวงมาลัยเพาเวอร์ Complete Set", "suspension", 8500, "Steering System", "Camry ACV30/40, Wish, Altis", "steering,rack", "คำแนะนำ: แก้ปัญหาพวงมาลัยมีเสียงดัง น้ำมันเพาเวอร์ซึม เปลี่ยนยกเส้นคุ้มค่ากว่าซ่อมซอยย่อย"],
-      [33, "คอมเพรสเซอร์แอร์ Denso แท้ศูนย์", "electric", 7800, "Air Condition", "Vios, Altis, Yaris, Commuter", "compressor", "คำแนะนำ: ต้องแวคคั่มระบบและเปลี่ยนดรายเออร์แอร์ใหม่ทุกครั้งที่เปลี่ยนคอมแอร์ เพื่อความทนทาน"],
-      [34, "แผ่นคลัตช์ทองแดง 16 ก้อน + หวีคลัตช์สองชั้น", "engine", 8900, "Street Drag", "Vigo, Revo D4D (เครื่อง 2.5 / 3.0)", "clutch,disc", "คำแนะนำ: สำหรับรถกระบะรีแม็พกล่องเพิ่มแรงดัน โดดดี ออกตัวไม่ฟรีทิ้ง โดดเด่นเรื่องความทนทาน"],
-      [35, "สเปเซอร์รองล้อ อลูมิเนียมฟอร์จ 6 รู 139.7", "suspension", 2800, "Wheel Stance", "Hilux, Fortuner, Champ", "spacer,wheel", "คำแนะนำ: ด้ามล้อให้ออกมาเสมอซุ้ม เพิ่มฐานล้อให้กว้างขึ้น ทรงตัวดีขึ้นขณะเข้าโค้งด้วยความเร็ว"],
-      [36, "ชุดซีลยางหม้อลมเบรก + ผ้าเบรกเกรดเซรามิก", "suspension", 3400, "Brake Maintenance", "Corolla AE101, Soluna AL50", "brakepad", "คำแนะนำ: ผ้าเบรกทนความร้อนสูง ไร้ฝุ่นดำติดล้อเบรค เบรคนุ่มนวลไม่กินจานเบรกเดิม"],
-      [37, "ชุดสายบัสและปลั๊กชาร์จ Type 2 EV Home", "electric", 16500, "EV Charger", "bZ4X, Prius PHEV", "evcharger", "คำแนะนำ: รองรับกำลังไฟสูงสุด 22kW สายไฟมาตรฐาน VDE ปลอดภัยด้วยระบบตัดไฟอัตโนมัติ"],
-      [38, "กันชนหน้าเหล็กทรงออฟโรด + ถาดวิ้นช์", "body", 19500, "Off-Road Tough", "Land Cruiser FJ40, Hilux Tiger, Revo", "bumper,offroad", "คำแนะนำ: เหล็กหนา 3 มม. พ่นสีพาวเดอร์โค้ทกันสนิม พร้อมจุดยึดไฟสปอตไลท์และห่วงลากจูง"],
-      [39, "อ่างน้ำมันเครื่องอลูมิเนียมมีกั้นห้อง (Baffled Oil Pan)", "engine", 7500, "Track Prep", "4AGE, 3SGE, 2GR-FE", "oilpan", "คำแนะนำ: ป้องกันอาการน้ำมันเครื่องแห้งขอดขณะเทโค้งด้วยความเร็วสูง ยืดอายุชาร์ฟอกชาร์ฟก้าน"],
-      [40, "สปริงโหลด Performance Lowering Springs", "suspension", 6900, "Lowering Suspension", "Yaris Ativ, City, Altis, C-HR", "springs,car", "คำแนะนำ: โหลดลงประมาณ 1.5 นิ้ว ทรงสวยกำลังดี ไม่กระด้าง นั่งสบาย ไม่ติดซุ้มล้อเดิม"],
-      [41, "กล่องฟิวส์และเบรกเกอร์ตัดไฟตัดหมอก", "electric", 1200, "Safety Wiring", "ทุกรุ่นของ Toyota", "fusebox", "คำแนะนำ: ป้องกันระบบไฟลัดวงจรจากการติดตั้งอุปกรณ์ต่อพ่วงเพิ่มเติม เช่น ไฟสปอตไลท์ เครื่องเสียง"],
-      [42, "หม้อต้มแก๊ส LPG/NGV Tomasetto 200HP", "engine", 3500, "LPG System", "Altis, Camry, Commuter 2.7", "lpg,engine", "คำแนะนำ: สำหรับรถติดแก๊ส ประสิทธิภาพการจ่ายแก๊สนิ่ง จ่ายแก๊สได้พอดีในรอบสูง"],
-      [43, "ยางรองแท่นเครื่อง + แท่นเกียร์ ยางพรีเมียม (Set 4 ชิ้น)", "engine", 4800, "Vibration Reduction", "Camry ACV30/40, Vios, Altis", "enginemount", "คำแนะนำ: ขจัดอาการสั่นสะท้านเข้าห้องโดยสารขณะจอดติดไฟแดง ถนอมเพลาขับหน้า"],
-      [44, "แร็คหลังคาอลูมิเนียมโปรไฟล์ตรงรุ่น", "body", 5800, "Travel & Cargo", "Corolla Cross, Fortuner, RAV4", "roofrack", "คำแนะนำ: รับน้ำหนักบรรทุกได้สูงสุด 80 กก. ไม่ต้องเจาะตัวถังรถ เสียงลมเงียบขณะวิ่งความเร็วสูง"],
-      [45, "กรองอากาศเลสแต่ง High-Flow Air Filter", "engine", 1800, "Air Intake", "GR Yaris, Revo, Fortuner, Ativ", "airfilter", "คำแนะนำ: อากาศไหลผ่านได้ดีกว่ากรองกระดาษเดิม 30% ถอดล้างทำความสะอาดใช้ซ้ำได้ตลอดอายุการใช้งาน"],
-      [46, "ชุดสายพานไทม์มิ่ง + ลูกรอกสายพาน Koyo", "engine", 2900, "Timing Belt Kit", "1KD-FTV, 2KD-FTV (Vigo, Fortuner)", "timingbelt", "คำแนะนำ: ควรเปลี่ยนทุกๆ 150,000 กม. พร้อมลูกรอกและซีลหน้าเครื่องเพื่อป้องกันสายพานขาด"],
-      [47, "สวิตช์ควบคุมกระจกไฟฟ้าประตูฝั่งคนขับ", "electric", 1400, "Interior Replacement", "Vios, Yaris, Altis 2008-2013", "switch,car", "คำแนะนำ: แก้ปัญหากระจกไฟฟ้าไม่เด้งขึ้น หรือกดลงไม่ได้ ปลั๊กตรงรุ่นเสียบเปลี่ยนได้ทันที"],
-      [48, "ไฟตัดหมอก LED เลนส์แก้วเหลืองสไตล์เรโทร", "electric", 2200, "Retro Fog Light", "KE70, RN10, RT40, Land Cruiser", "foglight", "คำแนะนำ: แสงสีเหลืองอำพันตัดหมอกและฝนได้ดีเยี่ยม ลุคคลาสสิกตัวเรือนโลหะแข็งแรง"],
-      [49, "ท่อทางน้ำยางซิลิโคนทนความร้อนสูง (Set 8 ท่อน)", "engine", 3200, "Silicone Hose", "AE86, JZA80, SW20, Vigo", "hose,engine", "คำแนะนำ: ทนแรงดันได้ดีกว่ายางเดิม ไม่บวมไม่แตกง่ายเมื่อเจอความร้อนสะสมในห้องเครื่อง"],
-      [50, "พรมปูพื้นรถยนต์ 6D เข้ารูปตรงรุ่นกันน้ำ", "body", 2200, "Interior Protection", "Toyota ทุกรุ่นปี 1990-2026", "carmat", "คำแนะนำ: วัสดุหนัง PU กันน้ำ ไร้กลิ่นอับ ถอดล้างทำความสะอาดง่าย ไม่ลื่นไถลไปขัดแป้นคันเร่ง"]
+    const products = [
+      { id: 101, category: "brake", name: "ผ้าเบรกหลัง (ดรัมเบรก) แท้ศูนย์ Revo 2018", price: 1450, badge: "แท้ศูนย์ TOYOTA", compat: "Revo 2015-2020 (2WD / 4WD)", img: "https://img1.pic.in.th/images/19d54ee2ca13272c4.webp", desc: "คำแนะนำช่าง: เปลี่ยนผ้าเบรกดรัมหลัง Revo ควรทำความสะอาดสปริงดึงกลับและทาจารบีทนความร้อนที่จุดสัมผัสฝาครอบ เพื่อป้องกันอาการเบรกติดหรือมีเสียงดัง" },
+      { id: 102, category: "brake", name: "ผ้าเบรกหน้า Ceramic Performance Revo 2018", price: 1850, badge: "High Performance", compat: "Revo 2018 (เครื่อง 2.4/2.8)", img: "https://img2.pic.in.th/219626f024a665da5.jpg", desc: "คำแนะนำช่าง: ไร้ฝุ่นดำติดล้อ ทนความร้อนสูง ยามเปลี่ยนผ้าเบรกหน้าควรถอยสลักคาลิเปอร์ออกมาเช็ดและทาจารบีสลักเบรกใหม่ ป้องกันคาลิเปอร์กินผ้าเบรกไม่เท่ากัน" },
+      { id: 103, category: "brake", name: "จานเบรกหน้าแบบมีร่องระบายความร้อน Revo", price: 2900, badge: "Brembo แท้", compat: "Revo 2018 Prerunner / 4WD", img: "https://img2.pic.in.th/3d743f208a27263b6.jpg", desc: "คำแนะนำช่าง: จานเบรกเจาะรูร่องช่วยระบายความร้อนได้ดีเยี่ยม ลดอาการเบรกเฟดเมื่อลงทางช่างชัน ควรเจียรจารรันอินผ้าเบรกใหม่ 200 กม. แรก" },
+      { id: 104, category: "brake", name: "น้ำมันเบรก Synthetic DOT 4 (1 Litre)", price: 380, badge: "น้ำมันเคมีแท้", compat: "Toyota ทุกรุ่น", img: "https://img2.pic.in.th/4a1f9b51ec1b5bf2b.jpg", desc: "คำแนะนำช่าง: แนะนำเปลี่ยนถ่ายน้ำมันเบรกทุกๆ 2 ปีหรือ 40,000 กม. เพื่อป้องกันความชื้นในระบบเบรกอันเป็นสาเหตุให้ปั๊ม ABS เกิดสนิม" },
+      { id: 105, category: "brake", name: "ชุดสลักคาลิเปอร์เบรกหน้าพร้อมยางกันฝุ่น Revo", price: 650, badge: "อะไหล่ทดแทน", compat: "Revo 2015-2022", img: "https://img2.pic.in.th/5278c96ec5ce1909e.jpg", desc: "คำแนะนำช่าง: หากมีอาการเบรกแล้วติด หรือคาลิเปอร์เบรกไม่คืนตัว สาเหตุหลักมาจากสลักคาลิเปอร์เป็นสนิม เปลี่ยนชุดนี้พร้อมทาจารบีสลักเบรกจบแน่นอน" },
+      { id: 106, category: "brake", name: "หม้อลมเบรกเสริมแรงดัน Revo 2018", price: 3400, badge: "OEM Quality", compat: "Revo 2.4/2.8 Diesel", img: "https://img2.pic.in.th/63ed88f14dbf6a0b1.jpg", desc: "คำแนะนำช่าง: ช่วยให้แป้นเบรกนุ่มนวลและออกแรงกดน้อยลง เหมาะสำหรับรถที่บรรทุกหนักหรือใช้ผ้าเบรกเนื้อแข็ง" },
+      { id: 107, category: "engine", name: "ไส้กรองน้ำมันเครื่อง Revo 2GD/1GD", price: 220, badge: "แท้ศูนย์", compat: "Revo 2018 (2.4L / 2.8L)", img: "https://img1.pic.in.th/images/7f631bac10f59ed2c.jpg", desc: "คำแนะนำช่าง: เปลี่ยนพร้อมถ่ายน้ำมันเครื่องทุกๆ 10,000 กม. ก่อนหมุนกรองใหม่เข้าไป ให้เอาน้ำมันเครื่องทาที่โอริงยางเบาๆ เพื่อให้ซีลแนบสนิท" },
+      { id: 108, category: "engine", name: "ไส้กรองโซล่า (กรองดีเซล) Revo 2018", price: 390, badge: "แท้ศูนย์", compat: "Revo 2.4 / 2.8 ปี 2015-2020", img: "https://img1.pic.in.th/images/866b797f3903e5702.jpg", desc: "คำแนะนำช่าง: หากหน้าปัดเตือนไฟกรองดีเซลขึ้น ให้รีบเปลี่ยนทันที เมื่อเปลี่ยนเสร็จต้องทำการแย้กปั๊มมือตรงเสื้อกรองจนกว่าจะตึงมือเพื่อไล่อากาศ" },
+      { id: 109, category: "engine", name: "ไส้กรองอากาศเครื่องยนต์ High-Flow Revo", price: 450, badge: "OEM Standard", compat: "Revo 2015-2022 ทุกรุ่น", img: "https://img1.pic.in.th/images/9ca3f1fb91e05fb6e.jpg", desc: "คำแนะนำช่าง: ช่วยให้อากาศไหลเข้าสู่ห้องเผาไหม้ได้ดียิ่งขึ้น ช่วยประหยัดน้ำมัน ควรเป่าทำความสะอาดทุกๆ 5,000 กม." },
+      { id: 110, category: "engine", name: "ชุดสายพานหน้าเครื่อง Bando Revo 2.4/2.8", price: 1250, badge: "Bando แท้", compat: "Revo 2018 2GD-FTV / 1GD-FTV", img: "https://img1.pic.in.th/images/imagesf121659a2b3dbecd.png", desc: "คำแนะนำช่าง: ตรวจเช็คทุก 80,000 กม. หากมีร่องแตกลายงาหรือมีเสียงดังจี๊ดๆ ตอนเช้าควรเปลี่ยนพร้อมลูกรอกตั้งสายพานอัตโนมัติ" },
+      { id: 111, category: "engine", name: "น้ำมันเครื่องสังเคราะห์แท้ Fully Synthetic 5W-30 (6+1L)", price: 2150, badge: "Toyota Genuine", compat: "เครื่องยนต์ดีเซล Revo", img: "https://img1.pic.in.th/images/11179c8b80bf213da7.jpg", desc: "คำแนะนำช่าง: ปกป้องเครื่องยนต์ดีเซลเทอร์โบได้อย่างดีเยี่ยม ระยะเปลี่ยนถ่าย 10,000 กม. ช่วยลดการสึกหรอยามสตาร์ทติดเครื่องตอนเช้า" },
+      { id: 112, category: "engine", name: "ปั๊มน้ำเครื่องยนต์ (Water Pump) Revo 2.4/2.8", price: 1950, badge: "Aisin แท้ Japan", compat: "Revo 2015-2020", img: "https://img2.pic.in.th/12b69e7aeab015025f.jpg", desc: "คำแนะนำช่าง: แก้อาการความร้อนขึ้นหรือมีคราบน้ำยาคูลแลนท์รั่วซึมตรงมูกลี้ปั๊มน้ำ ควรเปลี่ยนพร้อมน้ำยาฉีดระบายความร้อนหม้อน้ำแท้" },
+      { id: 113, category: "suspension", name: "โช๊คอัพหน้า-หลัง Kayaba Excel-G Revo", price: 6800, badge: "OEM Standard", compat: "Revo 2018 Prerunner / 4WD", img: "https://img1.pic.in.th/images/135b8f1a2c06c42ae6.jpg", desc: "คำแนะนำช่าง: โช๊คแก๊สกึ่งน้ำมัน หนึบกว่าโช๊คเดิมติดรถ ขันน็อตหูโช๊คตอนรถตั้งพื้นระดับปกติ เพื่อไม่ให้ยางหูโช๊คบิดตัวจนฉีดขาดไว" },
+      { id: 114, category: "suspension", name: "ลูกหมากปีกนกบน-ล่าง 555 Japan Revo", price: 2400, badge: "Made in Japan", compat: "Revo 2015-2022 2WD / 4WD", img: "https://img1.pic.in.th/images/1441d1c82b392aa2c6.jpg", desc: "คำแนะนำช่าง: แก้อาการเสียงดังสะเทือนช่วงล่างด้านหน้า ตรวจดูยางกันฝุ่นลูกหมากหากฉีกขาดจนจารบีไหล ควรรีบเปลี่ยนทันที" },
+      { id: 115, category: "suspension", name: "ลูกหมากกันโคลงหน้า Revo 2018 (คู่)", price: 1100, badge: "555 Japan", compat: "Revo 2015-2020", img: "https://img2.pic.in.th/151cce6beab9b976a0.jpg", desc: "คำแนะนำช่าง: แก้อาการรถโคลงเคลงยามเข้าโค้งหรือมีเสียงกุกกักตอนลงลูกระนาด เปลี่ยนง่ายและเห็นผลความนิ่งชัดเจน" },
+      { id: 116, category: "suspension", name: "ชุดยางกันกระแทกแหนบหลัง Polyurethane", price: 850, badge: "Heavy Duty", compat: "Revo กระบะบรรทุก / 4WD", img: "https://img1.pic.in.th/images/164c091f88a5917242.jpg", desc: "คำแนะนำช่าง: ยางโพลียูรีเทนทนทานกว่ายางติดรถ 3 เท่า ไม่แตกหักง่าย ซับแรงกระแทกยามตกรูหรือบรรทุกหนักได้ดีเยี่ยม" },
+      { id: 117, category: "suspension", name: "ชุดบูชปีกนกหน้าบน-ล่าง Revo (ครบเซ็ต)", price: 1800, badge: "OEM Grade", compat: "Revo 2015-2022", img: "https://img2.pic.in.th/17290a95d6cb32ad66.jpg", desc: "คำแนะนำช่าง: หากศูนย์ล้อตั้งไม่ตรง ยางกินข้าง บูชปีกนกเดิมแตกฉีกขาด อัดเปลี่ยนยกชุดช่วยให้ช่วงล่างกลับมาแน่นเหมือนรถใหม่" },
+      { id: 118, category: "suspension", name: "สเปเซอร์รองสปริงยกสูงหน้า 1 นิ้ว / 2 นิ้ว Revo", price: 1200, badge: "Cnc Aluminum", compat: "Revo Prerunner / 4WD", img: "https://img1.pic.in.th/images/1841fa3c9d6b6ad90b.jpg", desc: "คำแนะนำช่าง: อะลูมิเนียมเกรด 6061 CNC อย่างดี แก้อาการหน้าเชิดหรือต้องการเสริมความหล่อให้หน้ารถสูงเท่าด้านหลัง" },
+      { id: 119, category: "electric", name: "ไฟหน้า Revo 2018 LED Projector (ข้าง)", price: 5500, badge: "OEM Grade A", compat: "Revo 2018 Rocco / Prerunner", img: "https://img1.pic.in.th/images/19473dd0de6e56a53d.jpg", desc: "คำแนะนำช่าง: โคมพร้อมหลอด LED เสียบปลั๊กเดิมได้ทันที ยามติดตั้งควรเช็คซีลยางด้านหลังปลั๊กให้แน่นเพื่อป้องกันไอน้ำเข้าโคม" },
+      { id: 120, category: "electric", name: "ชุดไฟท้าย LED Smoked Black Revo 2018", price: 3200, badge: "Custom Style", compat: "Revo 2015-2020 ทุกรุ่น", img: "https://img1.pic.in.th/images/20a8bbc0da5ae0ebf0.jpg", desc: "คำแนะนำช่าง: ไฟท้ายโคมดำรมควันเพิ่มความสปอร์ต ไฟเบรกและไฟเลี้ยวแบบ LED สว่างชัดเจน ยอดนิยมในกลุ่มแต่ง Revo" },
+      { id: 121, category: "electric", name: "สวิตช์กระจกไฟฟ้าฝั่งคนขับ Revo 2018", price: 1150, badge: "อะไหล่แท้ศูนย์", compat: "Revo 4 ประตู / แค็บ", img: "https://img2.pic.in.th/20db1de13891ea88b5.jpg", desc: "คำแนะนำช่าง: แก้อาการกระจกฝั่งคนขับกดไม่ลง หรือปุ่ม Auto ไม่ทำงาน ปลั๊กตรงรุ่นเปลี่ยนเองได้ง่ายเพียงงัดหน้ากากออก" },
+      { id: 122, category: "electric", name: "ไดชาร์จ (Alternator) 12V 130A Revo 2.4/2.8", price: 4200, badge: "Denso แท้", compat: "Revo 2015-2020", img: "https://img2.pic.in.th/2100fe5306e816d686.jpg", desc: "คำแนะนำช่าง: แก้อาการแบตเตอรี่ไฟไม่พอ หน้าปัดขึ้นรูปแบตเตอรี่ หรือไฟหน้าดรอปยามเปิดแอร์ Denso แท้ไฟจ่ายเสถียร" },
+      { id: 123, category: "electric", name: "เซนเซอร์วัดแรงดันไฟ Air Flow Meter Revo", price: 1650, badge: "Denso Japan", compat: "Revo เครื่องดีเซลทุกรุ่น", img: "https://img1.pic.in.th/images/229fefaa9af58cb145.jpg", desc: "คำแนะนำช่าง: แก้อาการเครื่องยนต์เร่งไม่ขึ้น ไฟ Engine โชว์ หรือควันดำผิดปกติ ถอดทำความสะอาดได้ด้วยสเปรย์ล้าง Airflow" },
+      { id: 124, category: "electric", name: "ชุดไฟสปอร์ตไลท์ส่องสว่างหมอก LED Revo 2018", price: 1450, badge: "Complete Set", compat: "Revo 2018 กันชนเดิม", img: "https://img1.pic.in.th/images/23fa800713a45df548.jpg", desc: "คำแนะนำช่าง: มาพร้อมชุดสายไฟ, สวิตช์ตรงรุ่น และรีเลย์ ตัดหมอกได้ดีในยามฝนตกหนักหรือลุยหมอกควัน" },
+      { id: 125, category: "body", name: "กระจังหน้าแต่ง VTR สไตล์ Rocco Revo 2018", price: 1950, badge: "Custom Body", compat: "Revo 2018 (ใส่แทนกระจังเดิม)", img: "https://img1.pic.in.th/images/244118220c81396256.jpg", desc: "คำแนะนำช่าง: เปลี่ยนหน้าเดิมให้ดุดันแบบ Revo Rocco พลาสติก ABS ถอดน็อตกระจังเดิมใส่แทนได้เลยไม่ต้องดัดแปลง" },
+      { id: 126, category: "body", name: "คิ้วล้อทรงซาฟารีขนาด 4 นิ้ว Revo 2018", price: 2200, badge: "ABS Plastic", compat: "Revo Prerunner / 4WD", img: "https://img1.pic.in.th/images/256744694911005a23.jpg", desc: "คำแนะนำช่าง: ช่วยป้องกันเศษหินดีดใส่ตัวถังรถ มาพร้อมกาว 3M และน็อตหมุดแต่งในตัว เพิ่มความกว้างให้ตัวรถดูบึกบึน" },
+      { id: 127, category: "body", name: "กันชนหลังเหล็กทรงออฟโรด Revo 2018", price: 6500, badge: "Offroad Edition", compat: "Revo 2WD / 4WD ทุกรุ่น", img: "https://img2.pic.in.th/26e0a706d4bb3a7a31.jpg", desc: "คำแนะนำช่าง: เหล็กหนาพิเศษ 3 มม. พร้อมห่วงลาก D-Ring และไฟถอย LED ในตัว แข็งแกร่งทนทานต่อการชนลากจูง" },
+      { id: 128, category: "body", name: "กันสาดข้างประตูสีดำเข้ม Revo (4 ประตู)", price: 750, badge: "Acrylic 100%", compat: "Revo Double Cab 2015-2022", img: "https://img2.pic.in.th/27879558e703f054c6.jpg", desc: "คำแนะนำช่าง: ช่วยแย้มกระจกระบายความร้อนยามจอดตากแดด อะคริลิคเกรดเอ กาว 3M แท้ติดแน่นไม่หลุดยามขับความเร็วสูง" },
+      { id: 129, category: "body", name: "มือจับเปิดประตูด้านนอกสีดำเงา (ชุด 4 ชิ้น)", price: 890, badge: "Styling Kit", compat: "Revo 2015-2022", img: "https://img1.pic.in.th/images/285c7661f9a1069b8c.jpg", desc: "คำแนะนำช่าง: ครอบทับมือเปิดเดิมเพื่อป้องกันรอยขีดข่วนจากเล็บมือ หรือตกแต่งสไตล์ลดโครเมียมเพิ่มความเข้มให้รถ" },
+      { id: 130, category: "body", name: "แผ่นกันกระแทกใต้ห้องเครื่องยนต์ (Skid Plate)", price: 2800, badge: "Rally Red", compat: "Revo 2018 Prerunner / 4WD", img: "https://img1.pic.in.th/images/2905b1f4d61588825d.jpg", desc: "คำแนะนำช่าง: เหล็กอบสีแดงพาวเดอร์โค้ด หนา 4 มม. ป้องกันอ่างน้ำมันเครื่องและเกียร์ยามลุยโขดหินหรือทางออฟโรด" }
     ];
 
-    // แปลง Array เป็น Map Object โดยใช้ URL รูปภาพแบบเจาะจงเฉพาะชิ้น
-    const products = rawData.map(item => ({
-      id: item[0], 
-      name: item[1], 
-      category: item[2], 
-      price: item[3],
-      badge: item[4], 
-      compat: item[5],
-      img: item[8] || specificImages[item[0]] || fallbackImg,
-      desc: item[7]
-    }));
-
     let cart = [];
+    let wishlist = [];
+    let orders = JSON.parse(localStorage.getItem('revo_orders')) || [];
+    let selectedPayType = 'qr';
 
-    // --- Render Products Grid ---
+    function calculateDeliveryEstimate(days = 2) {
+      const shipDate = new Date();
+      if (shipDate.getHours() >= 14) shipDate.setDate(shipDate.getDate() + 1);
+      shipDate.setDate(shipDate.getDate() + days);
+      return shipDate.toLocaleDateString('th-TH', { month: 'short', day: 'numeric', weekday: 'short' });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+
+    function toggleRole() {
+      isOwnerMode = !isOwnerMode;
+      const adminBtn = document.getElementById("adminBtn");
+      const toggleBtn = document.getElementById("toggleRoleBtn");
+      if (isOwnerMode) {
+        adminBtn.style.display = "flex";
+        toggleBtn.innerText = "🔓 มุมมอง: เจ้าของร้าน";
+        toggleBtn.style.borderColor = "var(--green)";
+        toggleBtn.style.color = "var(--green)";
+        showToast("เปิดแสดงปุ่มระบบหลังบ้านแล้ว");
+      } else {
+        adminBtn.style.display = "none";
+        toggleBtn.innerText = "🔒 มุมมอง: ลูกค้า";
+        toggleBtn.style.borderColor = "var(--cyan)";
+        toggleBtn.style.color = "var(--cyan)";
+        showToast("สลับเป็นมุมมองลูกค้า (ซ่อนหลังบ้าน)");
+      }
+    }
+
+    function verifyAdminAndOpen() {
+      const pin = prompt("🔐 กรุณากรอก รหัส PIN เจ้าของร้าน เพื่อเข้าสู่ระบบหลังบ้าน:");
+      if (pin === ADMIN_PIN) openAdminDashboard();
+      else if (pin !== null) alert("❌ รหัส PIN ไม่ถูกต้อง!");
+    }
+
+    function openImgModal(src, title) {
+      document.getElementById("imgModalSrc").src = src;
+      document.getElementById("imgModalCaption").innerText = title;
+      document.getElementById("imgModal").classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeImgModal() {
+      document.getElementById("imgModal").classList.remove("active");
+      document.body.style.overflow = "auto";
+    }
+
     function renderProducts(items = products) {
       const grid = document.getElementById("productsGrid");
       if (!grid) return;
-      if (items.length === 0) {
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">ไม่พบข้อมูลอะไหล่ที่ค้นหา...</div>`;
-        return;
-      }
-      grid.innerHTML = items.map(p => `
-        <div class="card">
-          <span class="card-badge">${p.badge}</span>
-          <div class="card-img-wrapper">
-            <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
-          </div>
-          <div class="card-info">
-            <div>
-              <div class="compatibility">🚘 รุ่นที่รองรับ: ${p.compat}</div>
-              <h4 class="card-title">${p.name}</h4>
+      grid.innerHTML = items.map(p => {
+        const isFav = wishlist.includes(p.id);
+        const safeTitle = p.name.replace(/'/g, "\\'");
+        return `
+          <div class="card">
+            <span class="card-badge">${p.badge}</span>
+            <button class="card-fav-btn ${isFav ? 'active' : ''}" onclick="toggleWishlist(${p.id})">${isFav ? '❤️' : '🤍'}</button>
+            <div class="card-img-wrapper" onclick="openImgModal('${p.img}', '${safeTitle}')">
+              <img src="${p.img}" alt="${p.name}" onerror="this.onerror=null; this.src='${fallbackImg}';">
             </div>
-            <div>
-              <div class="price-tag">฿${p.price.toLocaleString()}</div>
-              <div class="card-btns">
-                <button class="btn btn-detail" onclick="showDetail(${p.id})">💡 คำแนะนำช่าง</button>
-                <button class="btn btn-add" onclick="addToCart(${p.id})">+ สั่งซื้อ</button>
+            <div class="card-info">
+              <div>
+                <div class="compatibility">🚘 ${p.compat}</div>
+                <h4 class="card-title">${p.name}</h4>
+              </div>
+              <div>
+                <div class="price-tag">฿${p.price.toLocaleString()}</div>
+                <div class="card-btns" style="margin-top:8px;">
+                  <button class="btn btn-detail" onclick="openProductDetail(${p.id})">รายละเอียด</button>
+                  <button class="btn btn-add" onclick="addToCart(${p.id})">+ ใส่ตะกร้า</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
-    // --- Search & Filter ---
     function filterCategory(cat, btn) {
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
@@ -296,153 +360,276 @@
     }
 
     function liveSearch() {
-      const q = document.getElementById("searchInput").value.toLowerCase();
-      renderProducts(products.filter(p => p.name.toLowerCase().includes(q) || p.compat.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)));
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(products.filter(p => p.name.toLowerCase().includes(q) || p.compat.toLowerCase().includes(q)));
     }
 
-    function searchGoogle() {
-      const q = document.getElementById("searchInput").value;
-      if (q.trim()) window.open(`https://www.google.com/search?q=${encodeURIComponent('อะไหล่ Toyota ' + q)}`, '_blank');
-      else alert("กรุณาพิมพ์ชื่ออะไหล่ หรือรุ่นรถในช่องค้นหาก่อนครับ!");
+    function toggleWishlist(id) {
+      const idx = wishlist.indexOf(id);
+      if (idx > -1) wishlist.splice(idx, 1); else wishlist.push(id);
+      document.getElementById('wishCount').innerText = wishlist.length;
+      renderProducts();
+      showToast(idx > -1 ? "ลบออกจากรายการโปรด" : "เพิ่มเข้าโปรดเรียบร้อย");
     }
 
-    // --- Cart System ---
     function addToCart(id) {
-      const p = products.find(i => i.id === id);
-      const exist = cart.find(i => i.p.id === id);
-      if (exist) exist.qty++; else cart.push({ p, qty: 1 });
-      updateCart();
-      alert(`เพิ่ม "${p.name}" ลงในใบสั่งซื้อแล้ว!`);
+      const item = cart.find(c => c.id === id);
+      if (item) item.qty++; else cart.push({ id, qty: 1 });
+      updateCartBadge();
+      showToast("เพิ่มลงในตะกร้าสินค้าแล้ว");
     }
 
-    function updateCart() {
-      document.getElementById("cartCount").innerText = cart.reduce((s, i) => s + i.qty, 0);
+    function updateCartBadge() {
+      document.getElementById('cartCount').innerText = cart.reduce((s, c) => s + c.qty, 0);
     }
 
-    function changeQty(id, d) {
-      const item = cart.find(i => i.p.id === id);
-      if (item) {
-        item.qty += d;
-        if (item.qty <= 0) cart = cart.filter(i => i.p.id !== id);
+    function openModal(html) {
+      document.getElementById('modalBody').innerHTML = html;
+      document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    function openProductDetail(id) {
+      const p = products.find(x => x.id === id);
+      openModal(`
+        <h3 style="margin-top:0;">${p.name}</h3>
+        <img src="${p.img}" style="width:100%; height:200px; object-fit:cover; border-radius:12px; margin-bottom:12px;" onerror="this.src='${fallbackImg}'">
+        <p style="color:var(--cyan); font-size:12px;">🚘 ${p.compat}</p>
+        <p style="font-size:13px; color:#cbd5e1;">${p.desc}</p>
+        <div style="font-size:20px; font-weight:bold; color:var(--gold); margin:15px 0;">฿${p.price.toLocaleString()}</div>
+        <button class="btn btn-add" style="width:100%; padding:12px;" onclick="addToCart(${p.id}); closeModal();">+ ใส่ตะกร้า</button>
+      `);
+    }
+
+    function openWishlist() {
+      const items = products.filter(p => wishlist.includes(p.id));
+      openModal(`
+        <h3>❤️ รายการที่ชอบ</h3>
+        ${items.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการที่ชอบ</p>' : items.map(p => `
+          <div class="cart-item">
+            <img src="${p.img}" class="cart-item-img">
+            <div class="cart-item-info">
+              <div><b>${p.name}</b></div>
+              <div style="color:var(--gold)">฿${p.price.toLocaleString()}</div>
+            </div>
+            <button class="btn btn-add" style="flex:0 0 auto; padding:6px 12px;" onclick="addToCart(${p.id})">+ ใส่ตะกร้า</button>
+          </div>
+        `).join('')}
+      `);
+    }
+
+    /* -----------------------------------------------------
+      ปรับแต่งระบบตะกร้า, จัดส่ง และการชำระเงินให้ละลาย & มีลูกเล่น
+    ----------------------------------------------------- */
+    function setPayType(type) {
+      selectedPayType = type;
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      const box = document.getElementById('payDetailBox');
+      if (type === 'qr') {
+        box.innerHTML = `
+          <div style="text-align:center;">
+            <p style="margin:4px 0;">สแกนเพื่อโอนเงิน ( PromptPay )</p>
+            <img src="https://img1.pic.in.th/images/199de2505b2701130cb85e9869bb014d.jpg" class="qr-img">
+            <div style="margin-top:8px;">ธ.กสิกรไทย <b>233-3456-713</b> <button class="copy-btn" onclick="navigator.clipboard.writeText('233-3456-713'); showToast('คัดลอกเลขบัญชีแล้ว!');">คัดลอก</button></div>
+            <div class="form-group" style="margin-top:10px;">
+              <label>แนบสลิป/ระบุเวลาโอน</label>
+              <input type="text" id="paySlipInfo" placeholder="เช่น โอนแล้ว 14:30 น. / แนบลิงก์รูป">
+            </div>
+          </div>
+        `;
+      } else if (type === 'cod') {
+        box.innerHTML = `
+          <div class="ship-card" style="border-color:var(--gold);">
+            <div>📦 เก็บเงินปลายทาง (+฿50 ค่าบริการ COD)</div>
+            <span style="color:var(--gold)">พร้อมจ่ายเมื่อรับสินค้า</span>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="form-group" style="margin-top:8px;">
+            <label>หมายเลขบัตรเครดิต / เดบิต</label>
+            <input type="text" placeholder="**** **** **** ****">
+          </div>
+        `;
       }
-      updateCart(); openCart();
+    }
+
+    function updateCarrierShipping() {
+      const val = document.getElementById('shippingCarrier').value;
+      const days = val === 'express' ? 1 : (val === 'ems' ? 2 : 3);
+      document.getElementById('estDateText').innerText = calculateDeliveryEstimate(days);
     }
 
     function openCart() {
-      const body = document.getElementById("modalBody");
-      if (cart.length === 0) {
-        body.innerHTML = `<div style="text-align:center; padding:30px; color:var(--muted);">⚙️<h3>ไม่มีรายการอะไหล่ในใบสั่งซื้อ</h3></div>`;
-      } else {
-        const total = cart.reduce((s, i) => s + (i.p.price * i.qty), 0);
-        body.innerHTML = `
-          <h3 style="margin-top:0;">🛒 ใบสั่งซื้ออะไหล่ (${cart.reduce((s,i)=>s+i.qty,0)} ชิ้น)</h3>
-          <div style="max-height:280px; overflow-y:auto; padding-right:4px;">
-            ${cart.map(i => `
+      if (cart.length === 0) return openModal('<h3>🛒 ตะกร้าสินค้า</h3><p style="color:var(--muted)">ไม่มีสินค้าในตะกร้า</p>');
+      
+      const total = cart.reduce((sum, item) => {
+        const p = products.find(x => x.id === item.id);
+        return sum + (p ? p.price * item.qty : 0);
+      }, 0);
+
+      openModal(`
+        <h3 style="margin-top:0;">🛒 ตะกร้าสินค้า</h3>
+        <div style="max-height:180px; overflow-y:auto;">
+          ${cart.map(item => {
+            const p = products.find(x => x.id === item.id);
+            return `
               <div class="cart-item">
-                <img src="${i.p.img}" class="cart-item-img" onerror="this.src='${fallbackImg}'">
+                <img src="${p.img}" class="cart-item-img">
                 <div class="cart-item-info">
-                  <div style="font-weight:600; line-height:1.2;">${i.p.name}</div>
-                  <div style="color:var(--gold); font-weight:bold; margin-top:2px;">฿${(i.p.price * i.qty).toLocaleString()}</div>
+                  <div style="font-weight:600;">${p.name}</div>
+                  <div style="color:var(--gold)">฿${(p.price * item.qty).toLocaleString()}</div>
                 </div>
-                <div style="display:flex; align-items:center; gap:4px;">
-                  <button class="cart-btn-qty" onclick="changeQty(${i.p.id}, -1)">-</button>
-                  <span style="padding:0 4px; font-weight:600;">${i.qty}</span>
-                  <button class="cart-btn-qty" onclick="changeQty(${i.p.id}, 1)">+</button>
+                <div>
+                  <button class="cart-btn-qty" onclick="changeQty(${p.id}, -1)">-</button>
+                  <span style="margin:0 6px;">${item.qty}</span>
+                  <button class="cart-btn-qty" onclick="changeQty(${p.id}, 1)">+</button>
                 </div>
               </div>
-            `).join('')}
+            `;
+          }).join('')}
+        </div>
+
+        <hr style="border:0; border-top:1px solid var(--glass-border); margin:15px 0;">
+
+        <!-- ตัวเลือกจัดส่งขั้นสูง -->
+        <div class="form-group">
+          <label>🚚 เลือกรูปแบบการขนส่ง & คำนวณวันรับสินค้า</label>
+          <select id="shippingCarrier" onchange="updateCarrierShipping()">
+            <option value="flash">Flash Express (กทม. 1-2 วัน / ตจว. 2-3 วัน)</option>
+            <option value="express">Kerry Express [ส่งด่วนพิเศษ] (รับวันถัดไป)</option>
+            <option value="ems">ไปรษณีย์ไทย EMS (2-3 วัน)</option>
+          </select>
+        </div>
+
+        <div class="ship-card">
+          <span>📅 คาดว่าจะได้รับสินค้าประมาณ:</span>
+          <b id="estDateText" style="color:var(--cyan);">${calculateDeliveryEstimate(2)}</b>
+        </div>
+
+        <!-- ฟอร์มชื่อผู้รับ -->
+        <div class="form-group" style="margin-top:12px;">
+          <input type="text" id="custName" placeholder="ชื่อ-นามสกุล ผู้รับ">
+        </div>
+        <div class="form-group">
+          <input type="text" id="custPhone" placeholder="เบอร์โทรศัพท์ติดต่อ">
+        </div>
+        <div class="form-group">
+          <input type="text" id="custAddress" placeholder="ที่อยู่จัดส่งโดยละเอียด">
+        </div>
+
+        <!-- แท็บเลือกการชำระเงิน -->
+        <label style="font-size:11px; color:var(--muted);">💳 เลือกช่องทางการชำระเงิน</label>
+        <div class="pay-tabs">
+          <div class="pay-tab active" onclick="setPayType('qr')">📲 สแกน QR Code</div>
+          <div class="pay-tab" onclick="setPayType('cod')">🚛 เก็บเงินปลายทาง</div>
+          <div class="pay-tab" onclick="setPayType('card')">💳 บัตรเครดิต</div>
+        </div>
+
+        <div id="payDetailBox" class="payment-box" style="margin-top:0;">
+          <div style="text-align:center;">
+            <p style="margin:4px 0; font-size:11px;">สแกนเพื่อโอนเงิน ( PromptPay )</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=0981813465" class="qr-img">
+            <div style="margin-top:8px; font-size:11px;">ธ.กสิกรไทย <b>098-1-81346-5</b> <button class="copy-btn" onclick="navigator.clipboard.writeText('0981813465'); showToast('คัดลอกเลขบัญชีแล้ว!');">คัดลอก</button></div>
+            <div class="form-group" style="margin-top:10px;">
+              <label>แนบสลิป/ระบุเวลาโอน</label>
+              <input type="text" id="paySlipInfo" placeholder="เช่น โอนแล้ว 14:30 น. / แนบลิงก์รูป">
+            </div>
           </div>
-          <hr style="border-color:var(--glass-border); margin:12px 0;">
-          <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:12px;">
-            <span>ราคารวมทั้งสิ้น:</span>
-            <span style="color:var(--gold); font-size:18px;">฿${total.toLocaleString()}</span>
-          </div>
-          <button class="btn btn-add" style="width:100%; padding:10px;" onclick="checkout()">💳 ยืนยันสั่งซื้อ / ชำระเงิน</button>
-        `;
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+          <div>ราคารวมทั้งสิ้น:</div>
+          <div style="font-size:22px; font-weight:bold; color:var(--gold);">฿${total.toLocaleString()}</div>
+        </div>
+
+        <button class="btn btn-add" style="width:100%; padding:12px; margin-top:12px; font-size:14px;" onclick="checkout()">✅ ยืนยันสั่งซื้อสินค้า</button>
+      `);
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(c => c.id === id);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
       }
-      openModal();
+      updateCartBadge();
+      openCart();
     }
 
     function checkout() {
-      document.getElementById("modalBody").innerHTML = `
-        <h3 style="margin-top:0; color:var(--cyan);">💳 สแกนชำระเงินมัดจำ / ค่าสินค้า</h3>
-        <div style="background:#fff; padding:10px; border-radius:10px; text-align:center; width:150px; margin:0 auto 12px;">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=ToyotaPartsPayment" style="width:100%;">
-          <div style="color:#000; font-size:10px; font-weight:bold;">TOYOTA PRO PARTS</div>
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const addr = document.getElementById('custAddress').value.trim();
+
+      if (!name || !phone || !addr) return alert("กรุณากรอกข้อมูลชื่อ เบอร์โทร และที่อยู่จัดส่งให้ครบถ้วน");
+
+      const carrier = document.getElementById('shippingCarrier').value;
+      const slip = document.getElementById('paySlipInfo') ? document.getElementById('paySlipInfo').value : '-';
+      const trackNo = "TH" + Math.floor(100000000 + Math.random() * 900000000);
+
+      const orderObj = {
+        id: "ORD" + Date.now().toString().slice(-6),
+        date: new Date().toLocaleString('th-TH'),
+        customer: { name, phone, addr },
+        items: [...cart],
+        payType: selectedPayType,
+        slipInfo: slip,
+        carrier: carrier.toUpperCase(),
+        tracking: trackNo,
+        total: cart.reduce((s, i) => s + (products.find(x => x.id === i.id)?.price || 0) * i.qty, 0)
+      };
+
+      orders.unshift(orderObj);
+      localStorage.setItem('revo_orders', JSON.stringify(orders));
+      document.getElementById('adminBadge').innerText = orders.length;
+
+      cart = [];
+      updateCartBadge();
+
+      openModal(`
+        <div style="text-align:center; padding:10px;">
+          <div style="font-size:45px;">🎉</div>
+          <h2>สั่งซื้อสำเร็จเรียบร้อย!</h2>
+          <p style="color:var(--cyan); font-size:13px;">เลขที่คำสั่งซื้อ: #${orderObj.id}</p>
+          <div class="ship-card" style="flex-direction:column; align-items:flex-start; gap:6px; margin:15px 0; text-align:left;">
+            <div>🚚 ขนส่ง: <b>${orderObj.carrier}</b></div>
+            <div>📦 พัสดุ Tracking (จำลอง): <b style="color:var(--gold);">${trackNo}</b></div>
+            <div>📅 คาดว่าถึงวันที่: <b>${calculateDeliveryEstimate()}</b></div>
+          </div>
+          <button class="btn btn-detail" style="width:100%; padding:10px;" onclick="closeModal()">ตกลง</button>
         </div>
-        <div class="form-group"><label>ชื่อ-นามสกุล:</label><input type="text" id="cName" placeholder="ระบุชื่อผู้ซื้อ"></div>
-        <div class="form-group"><label>เบอร์โทรศัพท์:</label><input type="text" id="cTel" placeholder="09X-XXX-XXXX"></div>
-        <button class="btn btn-add" style="width:100%; padding:10px; background:#10b981;" onclick="confirmOrder()">✅ ยืนยันการชำระเงิน</button>
-      `;
+      `);
     }
 
-    function confirmOrder() {
-      const name = document.getElementById("cName").value;
-      if (!name) return alert("กรุณากรอกชื่อผู้สั่งซื้อ!");
-      alert(`ขอบคุณคุณ ${name}! เจ้าหน้าที่จะจัดส่งอะไหล่และแจ้งเลข Tracking ให้ทราบครับ`);
-      cart = []; updateCart(); closeModal();
-    }
-
-    // --- Modal Detail ---
-    function showDetail(id) {
-      const p = products.find(i => i.id === id);
-      document.getElementById("modalBody").innerHTML = `
-        <div style="width:100%; height:180px; border-radius:10px; overflow:hidden; margin-bottom:10px; background:#000;">
-          <img src="${p.img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='${fallbackImg}'">
+    function openAdminDashboard() {
+      openModal(`
+        <h3>🛠️ ระบบหลังบ้าน (รายการสั่งซื้อ)</h3>
+        <div style="max-height:350px; overflow-y:auto;">
+          ${orders.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการสั่งซื้อเข้ามา</p>' : orders.map(o => `
+            <div class="admin-order-card">
+              <div class="admin-order-header">
+                <b>#${o.id} (${o.date})</b>
+                <span style="color:var(--gold)">฿${o.total.toLocaleString()}</span>
+              </div>
+              <div><b>ผู้สั่ง:</b> ${o.customer.name} (${o.customer.phone})</div>
+              <div><b>ที่อยู่:</b> ${o.customer.addr}</div>
+              <div><b>การชำระ:</b> ${o.payType.toUpperCase()} | <b>สลิป/ข้อมูล:</b> ${o.slipInfo}</div>
+              <div><b>การจัดส่ง:</b> ${o.carrier} | Tracking: <span style="color:var(--cyan)">${o.tracking}</span></div>
+            </div>
+          `).join('')}
         </div>
-        <span class="card-badge" style="position:static;">${p.badge}</span>
-        <h3 style="margin:8px 0 4px;">${p.name}</h3>
-        <div style="font-size:11px; color:var(--cyan); margin-bottom:10px;">🚘 รุ่นที่รองรับ: ${p.compat}</div>
-        <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:8px; border-left:3px solid var(--gold); font-size:12px; line-height:1.4; margin-bottom:12px;">
-          <strong style="color:var(--gold);">💡 คำแนะนำจากทีมช่างเฉพาะทาง:</strong>
-          <p style="margin:4px 0 0; color:var(--muted);">${p.desc}</p>
-        </div>
-        <div style="font-size:18px; color:var(--gold); font-weight:bold; margin-bottom:12px;">ราคา: ฿${p.price.toLocaleString()}</div>
-        <button class="btn btn-add" style="width:100%; padding:10px;" onclick="addToCart(${p.id}); closeModal();">+ เพิ่มลงในใบสั่งซื้อ</button>
-      `;
-      openModal();
-    }
-
-    function openModal() { document.getElementById("modalOverlay").classList.add("active"); }
-    function closeModal() { document.getElementById("modalOverlay").classList.remove("active"); }
-
-    function setNavActive(id) {
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-
-    function showHome() {
-      setNavActive('nav-home');
-      location.reload();
-    }
-
-    function showPromo() {
-      setNavActive('nav-promo');
-      document.getElementById("pageContent").innerHTML = `
-        <h2>💡 ข้อแนะนำในการเลือกซื้อและสั่งเบิกอะไหล่ Toyota</h2>
-        <div style="background:var(--card-bg); padding:20px; border-radius:16px; line-height:1.8; border:1px solid var(--glass-border);">
-          <p>1. <strong>เทียบรหัสเครื่องยนต์/รหัสตัวถัง:</strong> รถ Toyota แต่ละยุคมีรหัสเฉพาะ (เช่น AE86, JZA80, NCP42) การระบุรหัสตัวถังจะช่วยให้ได้อะไหล่ตรงรุ่น 100%</p>
-          <p>2. <strong>อะไหล่แท้ vs อะไหล่เทียบ:</strong> ชิ้นส่วนระบบเครื่องยนต์และเซนเซอร์ แนะนำใช้แท้ OEM ส่วนช่วงล่างสามารถใช้อะไหล่เทียบพรีเมียมได้</p>
-          <p>3. <strong>บริการจัดหาอะไหล่ Japan Import:</strong> หากเป็นอะไหล่รถคลาสสิก/เรโทร หายาก ทางร้านมีบริการสั่งตรงจากเซียงกงญี่ปุ่น</p>
-        </div>
-      `;
-    }
-
-    function showContact() {
-      setNavActive('nav-contact');
-      document.getElementById("pageContent").innerHTML = `
-        <h2>📞 ติดต่อฝ่ายบริการและเบิกอะไหล่</h2>
-        <div style="background:var(--card-bg); padding:20px; border-radius:16px; line-height:2; border:1px solid var(--glass-border);">
-          <p>📞 <strong>เบอร์โทรศัพท์:</strong> 098-181-3465</p>
-          <p>💬 <strong>Line ID:</strong> ball4533_</p>
-          <p>📘 <strong>Facebook:</strong> บอล</p>
-          <p>📍 <strong>คลังสินค้าหลัก:</strong> ศูนย์อะไหล่บางนา-ตราด กทม.</p>
-        </div>
-      `;
+      `);
     }
 
     // Initialize Page
     renderProducts();
+    document.getElementById('adminBadge').innerText = orders.length;
   </script>
 </body>
 </html>
