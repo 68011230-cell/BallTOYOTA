@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TOYOTA AUTO PARTS & HERITAGE - ศูนย์รวมอะไหล่โตโยต้าทุกยุคสมัย</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07090e;
+      --card-bg: rgba(18, 26, 43, 0.65);
+      --red: #ff2a4b;
+      --cyan: #00f2fe;
+      --gold: #ffb703;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --glass-border: rgba(255, 255, 255, 0.08);
+    }
+    * { box-sizing: border-box; font-family: 'Kanit', sans-serif; transition: 0.2s ease; }
+    body { margin: 0; background: var(--bg); color: var(--text); min-height: 100vh; background-image: radial-gradient(at 0% 0%, #1e1b4b 0px, transparent 50%), radial-gradient(at 100% 100%, #172554 0px, transparent 50%); background-attachment: fixed; }
+    
+    header { background: rgba(7, 9, 14, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; position: sticky; top: 0; z-index: 99; }
+    .logo { cursor: pointer; }
+    .logo h2 { margin: 0; font-size: 20px; font-weight: 700; background: linear-gradient(135deg, #fff, var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .logo p { margin: 0; font-size: 10px; color: var(--muted); }
+    
+    nav { display: flex; gap: 6px; }
+    nav a { color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+    nav a:hover, nav a.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
+
+    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .search-box input { padding: 8px 14px; border-radius: 20px; border: 1px solid var(--glass-border); background: rgba(15, 23, 42, 0.8); color: #fff; outline: none; width: 160px; font-size: 12px; }
+    .search-box input:focus { width: 200px; border-color: var(--cyan); box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
+    .btn-act { border: none; color: #fff; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .btn-google { background: #ea4335; }
+    .btn-cart { background: linear-gradient(135deg, var(--red), #b91c1c); box-shadow: 0 4px 15px rgba(255, 42, 75, 0.3); }
+
+    .container { padding: 20px 5%; max-width: 1300px; margin: 0 auto; }
+    .hero { background: linear-gradient(135deg, rgba(255, 42, 75, 0.1), rgba(0, 242, 254, 0.1)); border: 1px solid var(--glass-border); border-radius: 20px; padding: 25px; margin-bottom: 20px; text-align: center; }
+    .hero h1 { margin: 0 0 6px; font-size: 24px; color: #fff; }
+    .hero p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .categories { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; }
+    .cat-btn { background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border); color: var(--muted); padding: 8px 16px; border-radius: 30px; cursor: pointer; white-space: nowrap; font-size: 12px; }
+    .cat-btn.active, .cat-btn:hover { background: var(--cyan); color: #000; font-weight: 700; border-color: var(--cyan); box-shadow: 0 0 12px rgba(0, 242, 254, 0.4); }
+
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+    .card { background: var(--card-bg); backdrop-filter: blur(15px); border-radius: 16px; border: 1px solid var(--glass-border); overflow: hidden; display: flex; flex-direction: column; position: relative; }
+    .card:hover { transform: translateY(-6px); border-color: var(--cyan); box-shadow: 0 12px 25px rgba(0, 242, 254, 0.15); }
+    
+    .card-badge { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.7); color: var(--gold); border: 1px solid var(--gold); font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 12px; backdrop-filter: blur(4px); z-index: 2; }
+    .card-img-wrapper { width: 100%; height: 160px; background: #0f172a; overflow: hidden; position: relative; }
+    .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+    .card:hover img { transform: scale(1.05); opacity: 1; }
+
+    .card-info { padding: 14px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+    .card-title { margin: 0; font-size: 14px; font-weight: 600; color: #fff; line-height: 1.3; }
+    .compatibility { font-size: 11px; color: var(--cyan); line-height: 1.2; }
+    .price-tag { color: var(--gold); font-size: 16px; font-weight: 700; }
+
+    .card-btns { display: flex; gap: 6px; }
+    .btn { flex: 1; padding: 8px; border: none; border-radius: 8px; font-weight: 600; font-size: 11px; cursor: pointer; text-align: center; }
+    .btn-detail { background: rgba(255, 255, 255, 0.08); color: #fff; }
+    .btn-detail:hover { background: rgba(255, 255, 255, 0.18); }
+    .btn-add { background: linear-gradient(135deg, var(--red), #c0392b); color: #fff; }
+    .btn-add:hover { opacity: 0.9; }
+
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: #0f172a; border: 1px solid var(--glass-border); border-radius: 20px; width: 90%; max-width: 450px; padding: 20px; position: relative; max-height: 85vh; overflow-y: auto; color: #fff; }
+    .modal-close { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; }
+
+    .cart-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 8px 10px; border-radius: 8px; margin-bottom: 8px; font-size: 12px; }
+    .cart-item-img { width: 45px; height: 45px; border-radius: 6px; object-fit: cover; background: #07090e; flex-shrink: 0; }
+    .cart-item-info { flex-grow: 1; }
+    .cart-btn-qty { background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 4px; width: 22px; height: 22px; cursor: pointer; font-weight: bold; }
+    
+    .form-group { margin-bottom: 10px; text-align: left; }
+    .form-group label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 3px; }
+    .form-group input { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid var(--glass-border); background: #07090e; color: #fff; font-size: 12px; }
+
+    footer { background: #04060a; border-top: 1px solid var(--glass-border); padding: 20px 5%; margin-top: 40px; text-align: center; color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo" onclick="showHome()">
+      <h2>⚙️ TOYOTA PRO PARTS</h2>
+      <p>ศูนย์คลังอะไหล่โตโยต้า คลาสสิก เรโทร ถึง รุ่นปัจจุบัน</p>
+    </div>
+    <nav>
+      <a href="#" id="nav-home" class="active" onclick="showHome()">คลังอะไหล่</a>
+      <a href="#" id="nav-promo" onclick="showPromo()">คำแนะนำสั่งซื้อ</a>
+      <a href="#" id="nav-contact" onclick="showContact()">ติดต่อเรา</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="ค้นหาอะไหล่/รุ่น เช่น 4AGE, โช๊ค..." onkeyup="liveSearch()">
+      </div>
+      <button class="btn-act btn-google" onclick="searchGoogle()">🌐 Google</button>
+      <button class="btn-act btn-cart" onclick="openCart()">🛒 ใบสั่งซื้อ (<span id="cartCount">0</span>)</button>
+    </div>
+  </header>
+
+  <div class="container" id="pageContent">
+    <div class="hero">
+      <h1>🛠️ TOYOTA HERITAGE & MODERN PARTS ARCHIVE</h1>
+      <p>คัดสรรอะไหล่แท้ / อะไหล่เทียบพรีเมียม / อะไหล่ตกแต่งพิเศษ พร้อมคำแนะนำเชิงช่างกว่า 50 รายการ</p>
+    </div>
+
+    <div class="categories">
+      <button class="cat-btn active" onclick="filterCategory('all', this)">🔥 ทั้งหมด (50 รายการ)</button>
+      <button class="cat-btn" onclick="filterCategory('engine', this)">🔩 เครื่องยนต์ / ระบบส่งกำลัง</button>
+      <button class="cat-btn" onclick="filterCategory('suspension', this)">🏎️ ช่วงล่าง / เบรก / ล้อ</button>
+      <button class="cat-btn" onclick="filterCategory('body', this)">🚘 ตัวถัง / อุปกรณ์ภายนอก</button>
+      <button class="cat-btn" onclick="filterCategory('electric', this)">⚡ ระบบไฟ / อิเล็กทรอนิกส์ / EV</button>
+    </div>
+
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 TOYOTA PRO PARTS THAILAND | โทร: 098-181-3465 | Line: ball4533_ | FB: บอล</p>
+  </footer>
+
+  <script>
+    // รูปภาพสำรองกรณีเครือข่ายโหลดรูปไม่ทัน
+    const fallbackImg = 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop';
+
+    // รายการ URL รูปภาพที่ระบุเฉพาะชิ้นตามประเภทสินค้าจริง
+    const specificImages = {
+      1: 'https://img1.pic.in.th/images/images4c678126358ec7e4.jpg', // Gasket / Engine Part
+      2: 'https://img2.pic.in.th/images-1d463f9c028fc3b6f.jpg', // Suspension
+      3: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop', // Carburetor / Classic Engine
+      4: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Brembo Brakes
+      5: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500&auto=format&fit=crop', // Carbon Hood / Car
+      6: 'https://images.unsplash.com/photo-1558441719-443b38631ad9?w=500&auto=format&fit=crop', // HV Battery
+      7: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=500&auto=format&fit=crop', // Wire Tuck
+      8: 'https://images.unsplash.com/photo-1621285853634-713b8dd6b5fd?w=500&auto=format&fit=crop', // Turbocharger
+      9: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Twin Plate Clutch
+      10: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=500&auto=format&fit=crop', // Polyurethane Bushing
+      11: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop', // Pop-up Headlight
+      12: 'https://images.unsplash.com/photo-1542282088-72c9c27ed0cd?w=500&auto=format&fit=crop', // Classic Bullet Mirror
+      13: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // ECU Board
+      14: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Axle LSD
+      15: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop', // Dashboard
+      16: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop', // Intercooler
+      17: 'https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=500&auto=format&fit=crop', // Nardi Steering Wheel
+      18: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // Radiator
+      19: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=500&auto=format&fit=crop', // Fuel Pump
+      20: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop', // LED Taillight
+      21: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Camber Kit
+      22: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Injectors
+      23: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Brake Cylinder
+      24: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=500&auto=format&fit=crop', // Wiring Cable
+      25: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500&auto=format&fit=crop', // Weatherstrip
+      26: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Differential Gear
+      27: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Ignition Coil
+      28: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // Water Pump
+      29: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&auto=format&fit=crop', // Skid Plate
+      30: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Throttle Controller
+      31: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Exhaust Pipe
+      32: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Steering Rack
+      33: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // AC Compressor
+      34: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Clutch Disc
+      35: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=500&auto=format&fit=crop', // Wheel Spacer
+      36: 'https://images.unsplash.com/photo-1600706432502-7788fe3a27a0?w=500&auto=format&fit=crop', // Brake Pad
+      37: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop', // EV Charger
+      38: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&auto=format&fit=crop', // Offroad Bumper
+      39: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Oil Pan
+      40: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=500&auto=format&fit=crop', // Lowering Springs
+      41: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Fuse Box
+      42: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=500&auto=format&fit=crop', // LPG System
+      43: 'https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=500&auto=format&fit=crop', // Engine Mount
+      44: 'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=500&auto=format&fit=crop', // Roof Rack
+      45: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Air Filter
+      46: 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop', // Timing Belt
+      47: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&auto=format&fit=crop', // Power Switch
+      48: 'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop', // Retro Fog Light
+      49: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format&fit=crop', // Silicone Hose
+      50: 'https://images.unsplash.com/photo-1563720223185-11003d516935?w=500&auto=format&fit=crop'  // Car Mat 6D
+    };
+
+    // [0:id, 1:name, 2:cat, 3:price, 4:badge, 5:compat, 6:keyword, 7:advice, 8: custom_image_url]
+    const rawData = [
+      [1, "ชุดประเก็นยกชุด เครื่อง 4A-GE 16V/20V", "engine", 3800, "OEM แท้", "AE86, AE101, MR2 AW11", "gasket,engine", "คำแนะนำ: ควรใช้ปอนด์ปันน็อตฝาสูบตามสเปกโรงงาน (29 Nm + 90° + 90°) เพื่อป้องกันประเก็นแลบยามใช้รอบสูง"],
+      [2, "โช๊คอัพสตรัทปรับเกลียว GR Suspension Kit", "suspension", 42000, "GR Performance", "GR Yaris, GR86, GR Supra", "suspension,car", "คำแนะนำ: สามารถปรับระดับความแข็ง-อ่อนได้ 30 ระดับ เหมาะสำหรับสตรีทใช้งานประจำวันและแทร็กเดย์"],
+      [3, "คาร์บูเรเตอร์คู่ Mikuni Solex 40mm", "engine", 35000, "Rare Retro", "Celica TA22, Corolla KE30, Publica", "carburetor", "คำแนะนำ: เหมาะสำหรับเครื่องยนต์ตระกูล T และ K สายเรโทร ควรจูนแรงดันน้ำมันเบนซินไม่เกิน 3.5 PSI"],
+      [4, "จานเบรกขยาย + คาลิเปอร์ Brembo GT 6-Pot", "suspension", 68000, "High Power", "Fortuner, Revo, Land Cruiser 300", "brakes,car", "คำแนะนำ: ต้องใช้ร่วมกับล้อแม็กขอบ 18 นิ้วขึ้นไป เพื่อหลบระยะก้านเบรก ช่วยระยะเบรกสั้นลงชัดเจน"],
+      [5, "ฝากระโปรงคาร์บอนไฟเบอร์ทรง OEM", "body", 18500, "Carbon Pure", "AE86, JZA80 Supra, Yaris Ativ", "hood,car", "คำแนะนำ: น้ำหนักเบากว่าฝาเดิม 60% ควรลงเคลือบเงา UV Clear Coat เพิ่มเติมเพื่อยืดอายุการใช้งานกลางแจ้ง"],
+      [6, "แบตเตอรี่ไฮบริด HV Battery Module", "electric", 52000, "Factory Warranty", "Prius XW30, Camry AHV40/50, Cross", "battery,car", "คำแนะนำ: สินค้าประกันศูนย์ 2 ปี ควรทำความสะอาดพัดลมเป่าระบายความร้อนแบตเตอรี่ทุกๆ 20,000 กม."],
+      [7, "ชุดสายไฟหน้าเครื่อง Custom Wire Tuck", "electric", 8500, "Handmade", "KE70, RT100, DX, Corona", "wires,engine", "คำแนะนำ: สายไฟเกรดทนความร้อนสูง ป้องกันหนูกัดและไฟรั่ว สำหรับรถคลาสสิกที่ต้องการห้องเครื่องคลีนๆ"],
+      [8, "เทอร์โบชาร์จเจอร์ HKS GTIII-RS", "engine", 59000, "Tuning Grade", "Supra JZA80 (2JZ-GTE), Chaser JZX100", "turbo,engine", "คำแนะนำ: รองรับแรงม้าสูงสุด 500HP+ แนะนำเปลี่ยนปั๊มพอยต์เบนซินและหัวฉีดขนาด 800cc ขึ้นไป"],
+      [9, "ชุดคลัตช์สองแผ่น OS Giken Twin Plate", "engine", 46000, "Racing Part", "Supra, MR2 SW20, GR Yaris", "clutch,car", "คำแนะนำ: ทนทานแรงบิดสูง เหมาะกับรถเซ็ตเทอร์โบแรงม้าสูง อาจมีเสียงดังกรุ๊งกริ๊งขณะเหยียบคลัตช์ซึ่งเป็นเรื่องปกติ"],
+      [10, "ลูกหมากและบูชช่วงล่างโพลียูรีเทน ทั้งคัน", "suspension", 12500, "Heavy Duty", "Vigo, Fortuner, Tiger, Commuter", "bushing,car", "คำแนะนำ: ให้ความหนึบและคมในการเลี้ยวมากกว่ายางเดิมโรงงาน อายุกระด้างยาวนานกว่า 5 ปี"],
+      [11, "ชุดไฟหน้า Pop-up Complete Set", "electric", 28000, "NOS (New Old Stock)", "Celica A60, MR2 AW11/SW20, AE86", "headlight", "คำแนะนำ: มาพร้อมมอเตอร์และชุดสายไฟตรงรุ่น ควรทาจารบีขาวที่มอเตอร์เฟืองยกก่อนติดตั้ง"],
+      [12, "กระจกมองข้างทรงกระสุน Chrome Bullet Mirror", "body", 4500, "Vintage Style", "Toyota 2000GT, Sports 800, TA22", "mirror,car", "คำแนะนำ: งานชุบโครเมียมเกรดสะสม ไม่เป็นสนิมง่าย ปรับมุมมองได้กว้างเหมาะติดแก้มข้างตัวถัง"],
+      [13, "กล่องควบคุมเครื่องยนต์ ECUMASTER EMU Black", "electric", 39000, "Standalone ECU", "ทุกรุ่นที่วางเครื่อง 1JZ, 2JZ, 3S, 4AGE", "circuitboard", "คำแนะนำ: กล่องสแตนด์อโลน ปรับจูนรายละเอียดน้ำมันและองศาจุดระเบิดได้ละเอียดยิบ โดยช่างจูนเนอร์"],
+      [14, "เพลาลอยแต่งทรงถึก + เฟืองท้าย Limited Slip (LSD)", "suspension", 29000, "Off-Road & Drift", "Hilux RN10, Hero, Tiger, Revo", "axle,car", "คำแนะนำ: สำหรับรถสายบรรทุกหนัก หรือสายดริฟต์ปั่นสองล้อเท่ากัน ต้องใช้น้ำมันเฟืองท้ายเกรด LSD เท่านั้น"],
+      [15, "แผงคอนโซลหน้า OEM Repro Standard", "body", 14500, "Restoration", "Corolla KE70 / TE71, DX", "dashboard", "คำแนะนำ: งานฉีดขึ้นรูปพลาสติก ABS เกรดทนแดด ทนความร้อนสูง แก้ปัญหาคอนโซลเดิมแตกลายงา"],
+      [16, "อินเตอร์คูลเลอร์หนา 3 นิ้ว + ท่ออลูมิเนียมดัด", "engine", 11500, "Cooling System", "Hilux Revo, Fortuner 2.8, Vigo D4D", "intercooler", "คำแนะนำ: ช่วยลดอุณหภูมิไอดีเข้าเครื่องยนต์ อัตราเร่งดีขึ้นต่อเนื่องโดยเฉพาะตอนขับทางไกลแดดจัด"],
+      [17, "พวงมาลัยสปอร์ต Nardi Classic Leather 330mm", "body", 9800, "Interior Classic", "ทุกรุ่นของ Toyota (ใช้คอตรงรุ่น)", "steering", "คำแนะนำ: พวงมาลัยหนังแท้เย็บด้ายแดง จับกระชับมือ เหมาะกับทั้งรถซิ่งยุค 90s และรถคลาสสิก"],
+      [18, "หม้อน้ำอลูมิเนียม 3 ช่อง + พัดลมไฟฟ้า High Speed", "engine", 6500, "Extreme Cooling", "Camry ACV30/40, Wish, Alphard", "radiator", "คำแนะนำ: แก้ปัญหาความร้อนสะสมในเมือง จราจรติดขัด ควรใช้น้ำยาคูลแลนท์แท้ TOYOTA เติมผสม"],
+      [19, "ชุดปั๊มเชื้อเพลิงแรงดันสูง Walbro 450 LPH", "engine", 5800, "E85 Fuel Ready", "ทุกรุ่นที่เซ็ตเทอร์โบ หรือใช้ E85", "pump,fuel", "คำแนะนำ: รองรับน้ำมัน E85 ได้ 100% ป่ายน้ำมันทันทุกรอบเครื่องยนต์ ควรเปลี่ยนกรองเบนซินพร้อมกัน"],
+      [20, "ไฟท้ายแต่ง LED Sequential Style", "electric", 8900, "Modern Look", "Corolla Cross, C-HR, Yaris Ativ", "taillight", "คำแนะนำ: ไฟเลี้ยววิ่งแบบไฟไลท์บาร์ Plug & Play ไม่ต้องตัดต่อสายไฟเดิมของตัวรถ"],
+      [21, "ชุดช่วงล่างปีกนกปรับองศา Camber Kit", "suspension", 9500, "Stance & Track", "Altezza SXE10, GT86, GR86", "camber,wheel", "คำแนะนำ: ปรับตั้งมุมล้อ ลบ-บวก ได้ตามต้องการ สำหรับรถโหลดเตี้ยที่ต้องการตั้งศูนย์ล้อให้กินยางเรียบ"],
+      [22, "หัวฉีดเบนซิน Denso 550cc (Set 4 หัว)", "engine", 7200, "High Flow", "1NZ-FE, 2NR-FE, 3S-GE", "injector", "คำแนะนำ: ฉีดจ่ายน้ำมันเป็นฝอยรายละเอียด ช่วยให้การเผาไหม้สมบูรณ์ เหมาะสำหรับรถทำเครื่องยนต์โมดิฟาย"],
+      [23, "ปั๊มเบรกบน Master Cylinder ขนาดใหญ่", "suspension", 4200, "Safety Upgrade", "Crown MS65, RT40, Hilux RN20", "cylinder,brake", "คำแนะนำ: ช่วยเพิ่มแรงดันน้ำมันเบรก สำหรับรถคลาสสิกที่อัปเกรดดิสก์เบรกหน้ามาแล้ว ให้แป้นเบรกลึกกำลังดี"],
+      [24, "สายไฟ plug-and-play มอเตอร์พัดลมแอร์ / หม้อน้ำ", "electric", 850, "Genuine Spare", "Vios, Yaris, Altis, Sienta", "connector,cable", "คำแนะนำ: แก้ปัญหาปลั๊กเดิมกรอบแตกจากความร้อนสะสม เสียบเปลี่ยนแทนของเดิมได้ทันที"],
+      [25, "ยางขอบประตู และขอบกระจกรอบคัน", "body", 5500, "Weatherstrip Set", "Celica TA22, Corona RT80, KE30", "rubber,seal", "คำแนะนำ: ยางสังเคราะห์ตรงรุ่น ป้องกันเสียงลมและน้ำรั่วซึมเข้าห้องโดยสารได้อย่างดีเยี่ยม"],
+      [26, "เฟืองท้ายสปีดสูง 3.9 / 4.1 Ratio", "suspension", 16500, "Cruising Speed", "Commuter, Ventury, Hilux Champ", "gear,diff", "คำแนะนำ: ช่วยลดรอบเครื่องยนต์ขณะวิ่งทางไกล ประหยัดน้ำมันเชื้อเพลิง เสียงห้องโดยสารเงียบลง"],
+      [27, "คอยล์จุดระเบิด High Energy Ignition (Set 4 หัว)", "electric", 6800, "Performance Ignition", "Vios NCP42/91, Altis, C-HR", "coil,ignition", "คำแนะนำ: ให้ไฟจุดระเบิดแรงและสม่ำเสมอ แก้อาการเครื่องยนต์เดินเบาสั่น เครื่องสะดุด อัตราเร่งลื่นไหล"],
+      [28, "ปั๊มน้ำเครื่องยนต์ + วาล์วน้ำ 76°C Low Temp", "engine", 3200, "Cooling Maintenance", "1JZ-GTE, 2JZ-GTE, 1UZ-FE", "waterpump", "คำแนะนำ: วาล์วน้ำเปิดเร็วขึ้น ช่วยให้น้ำวนระบายความร้อนได้เร็วกว่าเดิม เหมาะกับเมืองไทย"],
+      [29, "การ์ดกันกระแทกใต้ท้องรถ อลูมิเนียม 4mm", "body", 6900, "Overland Protection", "Fortuner, Land Cruiser Prado, Revo", "skidplate", "คำแนะนำ: ปกป้องอ่างน้ำมันเครื่องและเกียร์จากการกระแทกหินหรือตอไม้ สายลุยแคมป์ปิ้งไม่ควรพลาด"],
+      [30, "กล่องคันเร่งไฟฟ้า Drive Mode 9 ระดับ", "electric", 2900, "Plug & Play", "Revo, Fortuner, Yaris Ativ, Cross", "pedal,drive", "คำแนะนำ: ขจัดอาการคันเร่งหน่วง อัตราเร่งตอบสนองทันใจ ติดตั้งง่ายไม่ตัดต่อสายไฟ ไม่หลุดประกันศูนย์"],
+      [31, "ท่อไอเสียสแตนเลสทั้งเส้น + หม้อพักปลาย", "engine", 15500, "Exhaust System", "GT86, GR86, Yaris 1.2", "exhaust,pipe", "คำแนะนำ: ดัดด้วยเครื่อง CNC เสียงนุ่มแน่น ไม่ดังรบกวน ช่วยระบายไอเสียได้ไหลลื่นขึ้น"],
+      [32, "แร็คพวงมาลัยเพาเวอร์ Complete Set", "suspension", 8500, "Steering System", "Camry ACV30/40, Wish, Altis", "steering,rack", "คำแนะนำ: แก้ปัญหาพวงมาลัยมีเสียงดัง น้ำมันเพาเวอร์ซึม เปลี่ยนยกเส้นคุ้มค่ากว่าซ่อมซอยย่อย"],
+      [33, "คอมเพรสเซอร์แอร์ Denso แท้ศูนย์", "electric", 7800, "Air Condition", "Vios, Altis, Yaris, Commuter", "compressor", "คำแนะนำ: ต้องแวคคั่มระบบและเปลี่ยนดรายเออร์แอร์ใหม่ทุกครั้งที่เปลี่ยนคอมแอร์ เพื่อความทนทาน"],
+      [34, "แผ่นคลัตช์ทองแดง 16 ก้อน + หวีคลัตช์สองชั้น", "engine", 8900, "Street Drag", "Vigo, Revo D4D (เครื่อง 2.5 / 3.0)", "clutch,disc", "คำแนะนำ: สำหรับรถกระบะรีแม็พกล่องเพิ่มแรงดัน โดดดี ออกตัวไม่ฟรีทิ้ง โดดเด่นเรื่องความทนทาน"],
+      [35, "สเปเซอร์รองล้อ อลูมิเนียมฟอร์จ 6 รู 139.7", "suspension", 2800, "Wheel Stance", "Hilux, Fortuner, Champ", "spacer,wheel", "คำแนะนำ: ด้ามล้อให้ออกมาเสมอซุ้ม เพิ่มฐานล้อให้กว้างขึ้น ทรงตัวดีขึ้นขณะเข้าโค้งด้วยความเร็ว"],
+      [36, "ชุดซีลยางหม้อลมเบรก + ผ้าเบรกเกรดเซรามิก", "suspension", 3400, "Brake Maintenance", "Corolla AE101, Soluna AL50", "brakepad", "คำแนะนำ: ผ้าเบรกทนความร้อนสูง ไร้ฝุ่นดำติดล้อเบรค เบรคนุ่มนวลไม่กินจานเบรกเดิม"],
+      [37, "ชุดสายบัสและปลั๊กชาร์จ Type 2 EV Home", "electric", 16500, "EV Charger", "bZ4X, Prius PHEV", "evcharger", "คำแนะนำ: รองรับกำลังไฟสูงสุด 22kW สายไฟมาตรฐาน VDE ปลอดภัยด้วยระบบตัดไฟอัตโนมัติ"],
+      [38, "กันชนหน้าเหล็กทรงออฟโรด + ถาดวิ้นช์", "body", 19500, "Off-Road Tough", "Land Cruiser FJ40, Hilux Tiger, Revo", "bumper,offroad", "คำแนะนำ: เหล็กหนา 3 มม. พ่นสีพาวเดอร์โค้ทกันสนิม พร้อมจุดยึดไฟสปอตไลท์และห่วงลากจูง"],
+      [39, "อ่างน้ำมันเครื่องอลูมิเนียมมีกั้นห้อง (Baffled Oil Pan)", "engine", 7500, "Track Prep", "4AGE, 3SGE, 2GR-FE", "oilpan", "คำแนะนำ: ป้องกันอาการน้ำมันเครื่องแห้งขอดขณะเทโค้งด้วยความเร็วสูง ยืดอายุชาร์ฟอกชาร์ฟก้าน"],
+      [40, "สปริงโหลด Performance Lowering Springs", "suspension", 6900, "Lowering Suspension", "Yaris Ativ, City, Altis, C-HR", "springs,car", "คำแนะนำ: โหลดลงประมาณ 1.5 นิ้ว ทรงสวยกำลังดี ไม่กระด้าง นั่งสบาย ไม่ติดซุ้มล้อเดิม"],
+      [41, "กล่องฟิวส์และเบรกเกอร์ตัดไฟตัดหมอก", "electric", 1200, "Safety Wiring", "ทุกรุ่นของ Toyota", "fusebox", "คำแนะนำ: ป้องกันระบบไฟลัดวงจรจากการติดตั้งอุปกรณ์ต่อพ่วงเพิ่มเติม เช่น ไฟสปอตไลท์ เครื่องเสียง"],
+      [42, "หม้อต้มแก๊ส LPG/NGV Tomasetto 200HP", "engine", 3500, "LPG System", "Altis, Camry, Commuter 2.7", "lpg,engine", "คำแนะนำ: สำหรับรถติดแก๊ส ประสิทธิภาพการจ่ายแก๊สนิ่ง จ่ายแก๊สได้พอดีในรอบสูง"],
+      [43, "ยางรองแท่นเครื่อง + แท่นเกียร์ ยางพรีเมียม (Set 4 ชิ้น)", "engine", 4800, "Vibration Reduction", "Camry ACV30/40, Vios, Altis", "enginemount", "คำแนะนำ: ขจัดอาการสั่นสะท้านเข้าห้องโดยสารขณะจอดติดไฟแดง ถนอมเพลาขับหน้า"],
+      [44, "แร็คหลังคาอลูมิเนียมโปรไฟล์ตรงรุ่น", "body", 5800, "Travel & Cargo", "Corolla Cross, Fortuner, RAV4", "roofrack", "คำแนะนำ: รับน้ำหนักบรรทุกได้สูงสุด 80 กก. ไม่ต้องเจาะตัวถังรถ เสียงลมเงียบขณะวิ่งความเร็วสูง"],
+      [45, "กรองอากาศเลสแต่ง High-Flow Air Filter", "engine", 1800, "Air Intake", "GR Yaris, Revo, Fortuner, Ativ", "airfilter", "คำแนะนำ: อากาศไหลผ่านได้ดีกว่ากรองกระดาษเดิม 30% ถอดล้างทำความสะอาดใช้ซ้ำได้ตลอดอายุการใช้งาน"],
+      [46, "ชุดสายพานไทม์มิ่ง + ลูกรอกสายพาน Koyo", "engine", 2900, "Timing Belt Kit", "1KD-FTV, 2KD-FTV (Vigo, Fortuner)", "timingbelt", "คำแนะนำ: ควรเปลี่ยนทุกๆ 150,000 กม. พร้อมลูกรอกและซีลหน้าเครื่องเพื่อป้องกันสายพานขาด"],
+      [47, "สวิตช์ควบคุมกระจกไฟฟ้าประตูฝั่งคนขับ", "electric", 1400, "Interior Replacement", "Vios, Yaris, Altis 2008-2013", "switch,car", "คำแนะนำ: แก้ปัญหากระจกไฟฟ้าไม่เด้งขึ้น หรือกดลงไม่ได้ ปลั๊กตรงรุ่นเสียบเปลี่ยนได้ทันที"],
+      [48, "ไฟตัดหมอก LED เลนส์แก้วเหลืองสไตล์เรโทร", "electric", 2200, "Retro Fog Light", "KE70, RN10, RT40, Land Cruiser", "foglight", "คำแนะนำ: แสงสีเหลืองอำพันตัดหมอกและฝนได้ดีเยี่ยม ลุคคลาสสิกตัวเรือนโลหะแข็งแรง"],
+      [49, "ท่อทางน้ำยางซิลิโคนทนความร้อนสูง (Set 8 ท่อน)", "engine", 3200, "Silicone Hose", "AE86, JZA80, SW20, Vigo", "hose,engine", "คำแนะนำ: ทนแรงดันได้ดีกว่ายางเดิม ไม่บวมไม่แตกง่ายเมื่อเจอความร้อนสะสมในห้องเครื่อง"],
+      [50, "พรมปูพื้นรถยนต์ 6D เข้ารูปตรงรุ่นกันน้ำ", "body", 2200, "Interior Protection", "Toyota ทุกรุ่นปี 1990-2026", "carmat", "คำแนะนำ: วัสดุหนัง PU กันน้ำ ไร้กลิ่นอับ ถอดล้างทำความสะอาดง่าย ไม่ลื่นไถลไปขัดแป้นคันเร่ง"]
+    ];
+
+    // แปลง Array เป็น Map Object โดยใช้ URL รูปภาพแบบเจาะจงเฉพาะชิ้น
+    const products = rawData.map(item => ({
+      id: item[0], 
+      name: item[1], 
+      category: item[2], 
+      price: item[3],
+      badge: item[4], 
+      compat: item[5],
+      img: item[8] || specificImages[item[0]] || fallbackImg,
+      desc: item[7]
+    }));
+
+    let cart = [];
+
+    // --- Render Products Grid ---
+    function renderProducts(items = products) {
+      const grid = document.getElementById("productsGrid");
+      if (!grid) return;
+      if (items.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--muted);">ไม่พบข้อมูลอะไหล่ที่ค้นหา...</div>`;
+        return;
+      }
+      grid.innerHTML = items.map(p => `
+        <div class="card">
+          <span class="card-badge">${p.badge}</span>
+          <div class="card-img-wrapper">
+            <img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';">
+          </div>
+          <div class="card-info">
+            <div>
+              <div class="compatibility">🚘 รุ่นที่รองรับ: ${p.compat}</div>
+              <h4 class="card-title">${p.name}</h4>
+            </div>
+            <div>
+              <div class="price-tag">฿${p.price.toLocaleString()}</div>
+              <div class="card-btns">
+                <button class="btn btn-detail" onclick="showDetail(${p.id})">💡 คำแนะนำช่าง</button>
+                <button class="btn btn-add" onclick="addToCart(${p.id})">+ สั่งซื้อ</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- Search & Filter ---
+    function filterCategory(cat, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(cat === 'all' ? products : products.filter(p => p.category === cat));
+    }
+
+    function liveSearch() {
+      const q = document.getElementById("searchInput").value.toLowerCase();
+      renderProducts(products.filter(p => p.name.toLowerCase().includes(q) || p.compat.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)));
+    }
+
+    function searchGoogle() {
+      const q = document.getElementById("searchInput").value;
+      if (q.trim()) window.open(`https://www.google.com/search?q=${encodeURIComponent('อะไหล่ Toyota ' + q)}`, '_blank');
+      else alert("กรุณาพิมพ์ชื่ออะไหล่ หรือรุ่นรถในช่องค้นหาก่อนครับ!");
+    }
+
+    // --- Cart System ---
+    function addToCart(id) {
+      const p = products.find(i => i.id === id);
+      const exist = cart.find(i => i.p.id === id);
+      if (exist) exist.qty++; else cart.push({ p, qty: 1 });
+      updateCart();
+      alert(`เพิ่ม "${p.name}" ลงในใบสั่งซื้อแล้ว!`);
+    }
+
+    function updateCart() {
+      document.getElementById("cartCount").innerText = cart.reduce((s, i) => s + i.qty, 0);
+    }
+
+    function changeQty(id, d) {
+      const item = cart.find(i => i.p.id === id);
+      if (item) {
+        item.qty += d;
+        if (item.qty <= 0) cart = cart.filter(i => i.p.id !== id);
+      }
+      updateCart(); openCart();
+    }
+
+    function openCart() {
+      const body = document.getElementById("modalBody");
+      if (cart.length === 0) {
+        body.innerHTML = `<div style="text-align:center; padding:30px; color:var(--muted);">⚙️<h3>ไม่มีรายการอะไหล่ในใบสั่งซื้อ</h3></div>`;
+      } else {
+        const total = cart.reduce((s, i) => s + (i.p.price * i.qty), 0);
+        body.innerHTML = `
+          <h3 style="margin-top:0;">🛒 ใบสั่งซื้ออะไหล่ (${cart.reduce((s,i)=>s+i.qty,0)} ชิ้น)</h3>
+          <div style="max-height:280px; overflow-y:auto; padding-right:4px;">
+            ${cart.map(i => `
+              <div class="cart-item">
+                <img src="${i.p.img}" class="cart-item-img" onerror="this.src='${fallbackImg}'">
+                <div class="cart-item-info">
+                  <div style="font-weight:600; line-height:1.2;">${i.p.name}</div>
+                  <div style="color:var(--gold); font-weight:bold; margin-top:2px;">฿${(i.p.price * i.qty).toLocaleString()}</div>
+                </div>
+                <div style="display:flex; align-items:center; gap:4px;">
+                  <button class="cart-btn-qty" onclick="changeQty(${i.p.id}, -1)">-</button>
+                  <span style="padding:0 4px; font-weight:600;">${i.qty}</span>
+                  <button class="cart-btn-qty" onclick="changeQty(${i.p.id}, 1)">+</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+          <hr style="border-color:var(--glass-border); margin:12px 0;">
+          <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:12px;">
+            <span>ราคารวมทั้งสิ้น:</span>
+            <span style="color:var(--gold); font-size:18px;">฿${total.toLocaleString()}</span>
+          </div>
+          <button class="btn btn-add" style="width:100%; padding:10px;" onclick="checkout()">💳 ยืนยันสั่งซื้อ / ชำระเงิน</button>
+        `;
+      }
+      openModal();
+    }
+
+    function checkout() {
+      document.getElementById("modalBody").innerHTML = `
+        <h3 style="margin-top:0; color:var(--cyan);">💳 สแกนชำระเงินมัดจำ / ค่าสินค้า</h3>
+        <div style="background:#fff; padding:10px; border-radius:10px; text-align:center; width:150px; margin:0 auto 12px;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=ToyotaPartsPayment" style="width:100%;">
+          <div style="color:#000; font-size:10px; font-weight:bold;">TOYOTA PRO PARTS</div>
+        </div>
+        <div class="form-group"><label>ชื่อ-นามสกุล:</label><input type="text" id="cName" placeholder="ระบุชื่อผู้ซื้อ"></div>
+        <div class="form-group"><label>เบอร์โทรศัพท์:</label><input type="text" id="cTel" placeholder="09X-XXX-XXXX"></div>
+        <button class="btn btn-add" style="width:100%; padding:10px; background:#10b981;" onclick="confirmOrder()">✅ ยืนยันการชำระเงิน</button>
+      `;
+    }
+
+    function confirmOrder() {
+      const name = document.getElementById("cName").value;
+      if (!name) return alert("กรุณากรอกชื่อผู้สั่งซื้อ!");
+      alert(`ขอบคุณคุณ ${name}! เจ้าหน้าที่จะจัดส่งอะไหล่และแจ้งเลข Tracking ให้ทราบครับ`);
+      cart = []; updateCart(); closeModal();
+    }
+
+    // --- Modal Detail ---
+    function showDetail(id) {
+      const p = products.find(i => i.id === id);
+      document.getElementById("modalBody").innerHTML = `
+        <div style="width:100%; height:180px; border-radius:10px; overflow:hidden; margin-bottom:10px; background:#000;">
+          <img src="${p.img}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='${fallbackImg}'">
+        </div>
+        <span class="card-badge" style="position:static;">${p.badge}</span>
+        <h3 style="margin:8px 0 4px;">${p.name}</h3>
+        <div style="font-size:11px; color:var(--cyan); margin-bottom:10px;">🚘 รุ่นที่รองรับ: ${p.compat}</div>
+        <div style="background:rgba(255,255,255,0.04); padding:10px; border-radius:8px; border-left:3px solid var(--gold); font-size:12px; line-height:1.4; margin-bottom:12px;">
+          <strong style="color:var(--gold);">💡 คำแนะนำจากทีมช่างเฉพาะทาง:</strong>
+          <p style="margin:4px 0 0; color:var(--muted);">${p.desc}</p>
+        </div>
+        <div style="font-size:18px; color:var(--gold); font-weight:bold; margin-bottom:12px;">ราคา: ฿${p.price.toLocaleString()}</div>
+        <button class="btn btn-add" style="width:100%; padding:10px;" onclick="addToCart(${p.id}); closeModal();">+ เพิ่มลงในใบสั่งซื้อ</button>
+      `;
+      openModal();
+    }
+
+    function openModal() { document.getElementById("modalOverlay").classList.add("active"); }
+    function closeModal() { document.getElementById("modalOverlay").classList.remove("active"); }
+
+    function setNavActive(id) {
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    function showHome() {
+      setNavActive('nav-home');
+      location.reload();
+    }
+
+    function showPromo() {
+      setNavActive('nav-promo');
+      document.getElementById("pageContent").innerHTML = `
+        <h2>💡 ข้อแนะนำในการเลือกซื้อและสั่งเบิกอะไหล่ Toyota</h2>
+        <div style="background:var(--card-bg); padding:20px; border-radius:16px; line-height:1.8; border:1px solid var(--glass-border);">
+          <p>1. <strong>เทียบรหัสเครื่องยนต์/รหัสตัวถัง:</strong> รถ Toyota แต่ละยุคมีรหัสเฉพาะ (เช่น AE86, JZA80, NCP42) การระบุรหัสตัวถังจะช่วยให้ได้อะไหล่ตรงรุ่น 100%</p>
+          <p>2. <strong>อะไหล่แท้ vs อะไหล่เทียบ:</strong> ชิ้นส่วนระบบเครื่องยนต์และเซนเซอร์ แนะนำใช้แท้ OEM ส่วนช่วงล่างสามารถใช้อะไหล่เทียบพรีเมียมได้</p>
+          <p>3. <strong>บริการจัดหาอะไหล่ Japan Import:</strong> หากเป็นอะไหล่รถคลาสสิก/เรโทร หายาก ทางร้านมีบริการสั่งตรงจากเซียงกงญี่ปุ่น</p>
+        </div>
+      `;
+    }
+
+    function showContact() {
+      setNavActive('nav-contact');
+      document.getElementById("pageContent").innerHTML = `
+        <h2>📞 ติดต่อฝ่ายบริการและเบิกอะไหล่</h2>
+        <div style="background:var(--card-bg); padding:20px; border-radius:16px; line-height:2; border:1px solid var(--glass-border);">
+          <p>📞 <strong>เบอร์โทรศัพท์:</strong> 098-181-3465</p>
+          <p>💬 <strong>Line ID:</strong> ball4533_</p>
+          <p>📘 <strong>Facebook:</strong> บอล</p>
+          <p>📍 <strong>คลังสินค้าหลัก:</strong> ศูนย์อะไหล่บางนา-ตราด กทม.</p>
+        </div>
+      `;
+    }
+
+    // Initialize Page
+    renderProducts();
+  </script>
+</body>
+</html>
