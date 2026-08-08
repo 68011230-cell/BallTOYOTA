@@ -48,26 +48,33 @@
     .logo h2 { margin: 0; font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 30%, var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .logo p { margin: 0; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
 
-    .header-actions { display: flex; align-items: center; gap: 10px; }
+    .header-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .search-box { position: relative; }
     .search-box input {
       padding: 9px 16px 9px 36px; border-radius: 30px; border: 1px solid var(--glass-border);
-      background: rgba(15, 23, 42, 0.9); color: #fff; outline: none; width: 180px; font-size: 12px;
+      background: rgba(15, 23, 42, 0.9); color: #fff; outline: none; width: 150px; font-size: 12px;
     }
-    .search-box input:focus { width: 220px; border-color: var(--cyan); box-shadow: var(--neon-glow); }
+    .search-box input:focus { width: 190px; border-color: var(--cyan); box-shadow: var(--neon-glow); }
     .search-box::before { content: "🔍"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 12px; opacity: 0.6; }
 
     .btn-act {
-      border: none; color: #fff; padding: 9px 16px; border-radius: 30px;
+      border: none; color: #fff; padding: 8px 14px; border-radius: 30px;
       font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
     }
     .btn-wishlist { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--glass-border); }
     .btn-wishlist:hover { background: rgba(255, 0, 85, 0.2); border-color: var(--red); }
+    .btn-history { background: rgba(139, 92, 246, 0.2); border: 1px solid var(--purple); color: #c4b5fd; }
+    .btn-history:hover { background: var(--purple); color: #fff; }
     .btn-admin { background: linear-gradient(135deg, var(--purple), #4f46e5); display: none; }
     .btn-cart { background: linear-gradient(135deg, var(--red), #c0392b); box-shadow: 0 4px 20px rgba(255, 0, 85, 0.4); }
     .btn-cart:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 0, 85, 0.6); }
 
-    .btn-mode-toggle { background: rgba(255,255,255,0.05); border: 1px dashed var(--cyan); color: var(--cyan); font-size: 11px; padding: 6px 12px; border-radius: 20px; cursor: pointer; }
+    .btn-auth { background: rgba(0, 242, 254, 0.15); border: 1px solid var(--cyan); color: var(--cyan); }
+    .btn-auth:hover { background: var(--cyan); color: #000; }
+    .btn-logout { background: rgba(255, 0, 85, 0.15); border: 1px solid var(--red); color: var(--red); }
+    .btn-logout:hover { background: var(--red); color: #fff; }
+
+    .user-profile-tag { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gold); font-weight: 600; background: rgba(255, 183, 3, 0.1); padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(255, 183, 3, 0.3); }
 
     .container { padding: 25px 5%; max-width: 1400px; margin: 0 auto; }
     .hero { background: linear-gradient(135deg, rgba(255, 0, 85, 0.12), rgba(0, 242, 254, 0.12)); border: 1px solid var(--glass-border); border-radius: 24px; padding: 30px; margin-bottom: 25px; text-align: center; position: relative; overflow: hidden; }
@@ -115,7 +122,7 @@
     /* Modal System */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-box { background: #0d1322; border: 1px solid var(--glass-border); border-radius: 24px; width: 92%; max-width: 520px; padding: 24px; position: relative; max-height: 88vh; overflow-y: auto; color: #fff; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+    .modal-box { background: #0d1322; border: 1px solid var(--glass-border); border-radius: 24px; width: 92%; max-width: 580px; padding: 24px; position: relative; max-height: 88vh; overflow-y: auto; color: #fff; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
     .modal-close { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: #fff; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; }
 
     .img-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(15px); display: flex; justify-content: center; align-items: center; z-index: 3000; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -124,7 +131,7 @@
     .img-modal-overlay.active .img-modal-content { transform: scale(1); }
     .img-modal-content img { max-width: 100%; max-height: 75vh; object-fit: contain; border-radius: 16px; box-shadow: 0 20px 50px rgba(0, 242, 254, 0.3); border: 1px solid var(--glass-border); }
     .img-modal-caption { margin-top: 15px; color: #fff; font-size: 16px; font-weight: 500; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
-    .img-modal-close { position: absolute; top: -45px; right: 0; background: rgba(255, 255, 255, 0.2); border: 1px solid var(--glass-border); color: #fff; font-size: 20px; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+    .img-modal-close { position: absolute; top: -45px; right: 0; background: rgba(255, 255, 255, 0.2); border: 1px solid var(--glass-border); color: #fff; font-size: 20px; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
     .img-modal-close:hover { background: var(--red); }
 
     .cart-item { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 10px 12px; border-radius: 12px; margin-bottom: 10px; font-size: 12px; border: 1px solid var(--glass-border); }
@@ -137,12 +144,17 @@
     .form-group input, .form-group select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--glass-border); background: #05070f; color: #fff; font-size: 12px; outline: none; }
     .form-group input:focus, .form-group select:focus { border-color: var(--cyan); box-shadow: var(--neon-glow); }
 
-    /* Custom Payment & Shipping Tabs (เพิ่มลูกเล่นการจัดส่งและการชำระเงิน) */
     .pay-tabs { display: flex; gap: 8px; margin: 10px 0; }
     .pay-tab { flex: 1; padding: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); border-radius: 10px; color: #fff; font-size: 11px; cursor: pointer; text-align: center; }
     .pay-tab.active { background: linear-gradient(135deg, var(--cyan), #00b900); color: #000; font-weight: bold; border-color: var(--cyan); }
     .ship-card { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px; margin-top: 10px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; }
     .copy-btn { background: var(--cyan); color: #000; border: none; padding: 4px 10px; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 10px; }
+
+    .status-badge { padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: bold; display: inline-block; }
+    .status-pending { background: rgba(255, 183, 3, 0.2); color: var(--gold); border: 1px solid var(--gold); }
+    .status-processing { background: rgba(0, 242, 254, 0.2); color: var(--cyan); border: 1px solid var(--cyan); }
+    .status-shipped { background: rgba(16, 185, 129, 0.2); color: #4ade80; border: 1px solid #4ade80; }
+    .status-cancelled { background: rgba(255, 0, 85, 0.2); color: var(--red); border: 1px solid var(--red); }
 
     #toast { position: fixed; bottom: 20px; right: 20px; background: rgba(16, 185, 129, 0.9); color: #fff; padding: 12px 20px; border-radius: 30px; font-size: 13px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.3); backdrop-filter: blur(10px); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 2000; }
     #toast.show { transform: translateY(0); opacity: 1; }
@@ -166,13 +178,16 @@
       </div>
     </div>
     <div class="header-actions">
+      <!-- ส่วนแสดงสถานะสมาชิก / ปุ่มเข้าสู่ระบบ -->
+      <div id="userNavArea" style="display:flex; align-items:center; gap:8px;"></div>
+
       <div class="search-box">
         <input type="text" id="searchInput" placeholder="ค้นหาอะไหล่..." onkeyup="liveSearch()">
       </div>
       <button class="btn-act btn-wishlist" onclick="openWishlist()">❤️ (<span id="wishCount">0</span>)</button>
+      <button class="btn-act btn-history" onclick="openOrderHistory()">📦 ประวัติสั่งซื้อ</button>
       <button class="btn-act btn-admin" id="adminBtn" onclick="verifyAdminAndOpen()">🛠️ หลังบ้าน (<span id="adminBadge">0</span>)</button>
-      <button class="btn-act btn-cart" onclick="openCart()">🛒 ตระกร้า (<span id="cartCount">0</span>)</button>
-      <button class="btn-mode-toggle" id="toggleRoleBtn" onclick="toggleRole()">🔒 มุมมอง: ลูกค้า</button>
+      <button class="btn-act btn-cart" onclick="openCart()">🛒 ตะกร้า (<span id="cartCount">0</span>)</button>
     </div>
   </header>
 
@@ -231,7 +246,21 @@
   <script>
     const fallbackImg = 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop';
     const ADMIN_PIN = "1234";
-    let isOwnerMode = false;
+
+    // --- ระบบบริหารจัดการผู้ใช้ (User Authentication & Database) ---
+    let usersDB = JSON.parse(localStorage.getItem('revo_users_db')) || {
+      "a@gmail.com": { name: "นาย A (สมชาย)", pass: "1234", phone: "081-111-1111", addr: "123 กทม.", role: "customer" },
+      "b@gmail.com": { name: "นาย B (สมศักดิ์)", pass: "1234", phone: "082-222-2222", addr: "456 นนทบุรี", role: "customer" },
+      "admin@gmail.com": { name: "ผู้ดูแลระบบ (Admin)", pass: "1234", phone: "098-181-3465", addr: "ร้านอะไหล่ Revo", role: "admin" }
+    };
+    
+    let currentUserEmail = localStorage.getItem('revo_current_user') || null;
+
+    // ข้อมูลจำลองตระกร้าและรายการโปรดที่แยกตาม User Email
+    let userCarts = JSON.parse(localStorage.getItem('revo_carts_db')) || {};
+    let userWishlists = JSON.parse(localStorage.getItem('revo_wishlists_db')) || {};
+    let orders = JSON.parse(localStorage.getItem('revo_orders')) || [];
+    let selectedPayType = 'qr';
 
     const products = [
       { id: 101, category: "brake", name: "ผ้าเบรกหลัง (ดรัมเบรก) แท้ศูนย์ Revo 2018", price: 1450, badge: "แท้ศูนย์ TOYOTA", compat: "Revo 2015-2020 (2WD / 4WD)", img: "https://img1.pic.in.th/images/19d54ee2ca13272c4.webp", desc: "คำแนะนำช่าง: เปลี่ยนผ้าเบรกดรัมหลัง Revo ควรทำความสะอาดสปริงดึงกลับและทาจารบีทนความร้อนที่จุดสัมผัสฝาครอบ เพื่อป้องกันอาการเบรกติดหรือมีเสียงดัง" },
@@ -266,10 +295,139 @@
       { id: 130, category: "body", name: "แผ่นกันกระแทกใต้ห้องเครื่องยนต์ (Skid Plate)", price: 2800, badge: "Rally Red", compat: "Revo 2018 Prerunner / 4WD", img: "https://img1.pic.in.th/images/2905b1f4d61588825d.jpg", desc: "คำแนะนำช่าง: เหล็กอบสีแดงพาวเดอร์โค้ด หนา 4 มม. ป้องกันอ่างน้ำมันเครื่องและเกียร์ยามลุยโขดหินหรือทางออฟโรด" }
     ];
 
-    let cart = [];
-    let wishlist = [];
-    let orders = JSON.parse(localStorage.getItem('revo_orders')) || [];
-    let selectedPayType = 'qr';
+    function saveDB() {
+      localStorage.setItem('revo_users_db', JSON.stringify(usersDB));
+      localStorage.setItem('revo_carts_db', JSON.stringify(userCarts));
+      localStorage.setItem('revo_wishlists_db', JSON.stringify(userWishlists));
+      if (currentUserEmail) localStorage.setItem('revo_current_user', currentUserEmail);
+      else localStorage.removeItem('revo_current_user');
+    }
+
+    function renderAuthUI() {
+      const area = document.getElementById('userNavArea');
+      const adminBtn = document.getElementById('adminBtn');
+
+      if (currentUserEmail && usersDB[currentUserEmail]) {
+        const user = usersDB[currentUserEmail];
+        area.innerHTML = `
+          <div class="user-profile-tag">👤 ${user.name}</div>
+          <button class="btn-act btn-logout" onclick="logout()">ออกจากระบบ</button>
+        `;
+        if (user.role === 'admin') {
+          adminBtn.style.display = 'flex';
+        } else {
+          adminBtn.style.display = 'none';
+        }
+      } else {
+        area.innerHTML = `
+          <button class="btn-act btn-auth" onclick="openLoginModal()">🔑 เข้าสู่ระบบ / สมัครสมาชิก</button>
+        `;
+        adminBtn.style.display = 'none';
+      }
+      updateCartBadge();
+      updateWishlistBadge();
+      renderProducts();
+    }
+
+    function openLoginModal() {
+      openModal(`
+        <h3 style="margin-top:0;">🔑 เข้าสู่ระบบสมาชิก</h3>
+        <div class="form-group">
+          <label>อีเมล (Email)</label>
+          <input type="email" id="loginEmail" placeholder="เช่น customer@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>รหัสผ่าน (Password)</label>
+          <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <button class="btn btn-add" style="width:100%; padding:10px;" onclick="handleLogin()">เข้าสู่ระบบ</button>
+        
+        <hr style="border:0; border-top:1px solid var(--glass-border); margin:15px 0;">
+        <div style="text-align:center;">
+          <p style="font-size:12px; color:var(--muted);">ยังไม่มีบัญชีสมาชิก?</p>
+          <button class="btn btn-detail" style="width:100%; padding:10px;" onclick="openRegisterModal()">สมัครสมาชิกใหม่</button>
+        </div>
+      `);
+    }
+
+    function openRegisterModal() {
+      openModal(`
+        <h3 style="margin-top:0;">📝 สมัครสมาชิกใหม่</h3>
+        <div class="form-group">
+          <label>ชื่อ-นามสกุล</label>
+          <input type="text" id="regName" placeholder="เช่น นายสมชาย สายลุย">
+        </div>
+        <div class="form-group">
+          <label>อีเมล</label>
+          <input type="email" id="regEmail" placeholder="name@example.com">
+        </div>
+        <div class="form-group">
+          <label>เบอร์โทรศัพท์</label>
+          <input type="text" id="regPhone" placeholder="08X-XXX-XXXX">
+        </div>
+        <div class="form-group">
+          <label>ที่อยู่จัดส่งสินค้า</label>
+          <input type="text" id="regAddr" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด">
+        </div>
+        <div class="form-group">
+          <label>รหัสผ่าน</label>
+          <input type="password" id="regPass" placeholder="ตั้งรหัสผ่าน">
+        </div>
+        <button class="btn btn-add" style="width:100%; padding:10px;" onclick="handleRegister()">ยืนยันสมัครสมาชิก</button>
+      `);
+    }
+
+    function handleLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+
+      if (!email || !pass) return alert("กรุณากรอกอีเมลและรหัสผ่าน");
+
+      if (usersDB[email] && usersDB[email].pass === pass) {
+        currentUserEmail = email;
+        saveDB();
+        renderAuthUI();
+        closeModal();
+        showToast(`ยินดีต้อนรับคุณ ${usersDB[email].name}`);
+      } else {
+        alert("❌ อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+      }
+    }
+
+    function handleRegister() {
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const phone = document.getElementById('regPhone').value.trim();
+      const addr = document.getElementById('regAddr').value.trim();
+      const pass = document.getElementById('regPass').value.trim();
+
+      if (!name || !email || !phone || !addr || !pass) return alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+
+      if (usersDB[email]) return alert("❌ อีเมลนี้เคยลงทะเบียนสมัครสมาชิกแล้ว");
+
+      usersDB[email] = { name, pass, phone, addr, role: "customer" };
+      currentUserEmail = email;
+      saveDB();
+      renderAuthUI();
+      closeModal();
+      showToast("สมัครสมาชิกและเข้าสู่ระบบเรียบร้อยแล้ว!");
+    }
+
+    function logout() {
+      currentUserEmail = null;
+      saveDB();
+      renderAuthUI();
+      showToast("ออกจากระบบเรียบร้อย");
+    }
+
+    function requireAuth(callback) {
+      if (!currentUserEmail) {
+        alert("🔒 กรุณาเข้าสู่ระบบสมาชิกก่อนทำรายการ");
+        openLoginModal();
+        return false;
+      }
+      return callback();
+    }
 
     function calculateDeliveryEstimate(days = 2) {
       const shipDate = new Date();
@@ -285,29 +443,14 @@
       setTimeout(() => toast.classList.remove("show"), 2500);
     }
 
-    function toggleRole() {
-      isOwnerMode = !isOwnerMode;
-      const adminBtn = document.getElementById("adminBtn");
-      const toggleBtn = document.getElementById("toggleRoleBtn");
-      if (isOwnerMode) {
-        adminBtn.style.display = "flex";
-        toggleBtn.innerText = "🔓 มุมมอง: เจ้าของร้าน";
-        toggleBtn.style.borderColor = "var(--green)";
-        toggleBtn.style.color = "var(--green)";
-        showToast("เปิดแสดงปุ่มระบบหลังบ้านแล้ว");
-      } else {
-        adminBtn.style.display = "none";
-        toggleBtn.innerText = "🔒 มุมมอง: ลูกค้า";
-        toggleBtn.style.borderColor = "var(--cyan)";
-        toggleBtn.style.color = "var(--cyan)";
-        showToast("สลับเป็นมุมมองลูกค้า (ซ่อนหลังบ้าน)");
-      }
-    }
-
     function verifyAdminAndOpen() {
-      const pin = prompt("🔐 กรุณากรอก รหัส PIN เจ้าของร้าน เพื่อเข้าสู่ระบบหลังบ้าน:");
-      if (pin === ADMIN_PIN) openAdminDashboard();
-      else if (pin !== null) alert("❌ รหัส PIN ไม่ถูกต้อง!");
+      if (!currentUserEmail || usersDB[currentUserEmail]?.role !== 'admin') {
+        const pin = prompt("🔐 กรุณากรอก รหัส PIN เจ้าของร้าน เพื่อเข้าสู่ระบบหลังบ้าน:");
+        if (pin === ADMIN_PIN) openAdminDashboard();
+        else if (pin !== null) alert("❌ รหัส PIN ไม่ถูกต้อง!");
+      } else {
+        openAdminDashboard();
+      }
     }
 
     function openImgModal(src, title) {
@@ -325,6 +468,7 @@
     function renderProducts(items = products) {
       const grid = document.getElementById("productsGrid");
       if (!grid) return;
+      const wishlist = currentUserEmail ? (userWishlists[currentUserEmail] || []) : [];
       grid.innerHTML = items.map(p => {
         const isFav = wishlist.includes(p.id);
         const safeTitle = p.name.replace(/'/g, "\\'");
@@ -365,21 +509,37 @@
     }
 
     function toggleWishlist(id) {
-      const idx = wishlist.indexOf(id);
-      if (idx > -1) wishlist.splice(idx, 1); else wishlist.push(id);
-      document.getElementById('wishCount').innerText = wishlist.length;
-      renderProducts();
-      showToast(idx > -1 ? "ลบออกจากรายการโปรด" : "เพิ่มเข้าโปรดเรียบร้อย");
+      requireAuth(() => {
+        if (!userWishlists[currentUserEmail]) userWishlists[currentUserEmail] = [];
+        let wishlist = userWishlists[currentUserEmail];
+        const idx = wishlist.indexOf(id);
+        if (idx > -1) wishlist.splice(idx, 1); else wishlist.push(id);
+        saveDB();
+        updateWishlistBadge();
+        renderProducts();
+        showToast(idx > -1 ? "ลบออกจากรายการโปรด" : "เพิ่มเข้าโปรดเรียบร้อย");
+      });
+    }
+
+    function updateWishlistBadge() {
+      const count = currentUserEmail ? (userWishlists[currentUserEmail]?.length || 0) : 0;
+      document.getElementById('wishCount').innerText = count;
     }
 
     function addToCart(id) {
-      const item = cart.find(c => c.id === id);
-      if (item) item.qty++; else cart.push({ id, qty: 1 });
-      updateCartBadge();
-      showToast("เพิ่มลงในตะกร้าสินค้าแล้ว");
+      requireAuth(() => {
+        if (!userCarts[currentUserEmail]) userCarts[currentUserEmail] = [];
+        let cart = userCarts[currentUserEmail];
+        const item = cart.find(c => c.id === id);
+        if (item) item.qty++; else cart.push({ id, qty: 1 });
+        saveDB();
+        updateCartBadge();
+        showToast("เพิ่มลงในตะกร้าสินค้าแล้ว");
+      });
     }
 
     function updateCartBadge() {
+      const cart = currentUserEmail ? (userCarts[currentUserEmail] || []) : [];
       document.getElementById('cartCount').innerText = cart.reduce((s, c) => s + c.qty, 0);
     }
 
@@ -405,25 +565,25 @@
     }
 
     function openWishlist() {
-      const items = products.filter(p => wishlist.includes(p.id));
-      openModal(`
-        <h3>❤️ รายการที่ชอบ</h3>
-        ${items.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการที่ชอบ</p>' : items.map(p => `
-          <div class="cart-item">
-            <img src="${p.img}" class="cart-item-img">
-            <div class="cart-item-info">
-              <div><b>${p.name}</b></div>
-              <div style="color:var(--gold)">฿${p.price.toLocaleString()}</div>
+      requireAuth(() => {
+        const wishlist = userWishlists[currentUserEmail] || [];
+        const items = products.filter(p => wishlist.includes(p.id));
+        openModal(`
+          <h3>❤️ รายการที่ชอบของคุณ</h3>
+          ${items.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการที่ชอบ</p>' : items.map(p => `
+            <div class="cart-item">
+              <img src="${p.img}" class="cart-item-img">
+              <div class="cart-item-info">
+                <div><b>${p.name}</b></div>
+                <div style="color:var(--gold)">฿${p.price.toLocaleString()}</div>
+              </div>
+              <button class="btn btn-add" style="flex:0 0 auto; padding:6px 12px;" onclick="addToCart(${p.id})">+ ใส่ตะกร้า</button>
             </div>
-            <button class="btn btn-add" style="flex:0 0 auto; padding:6px 12px;" onclick="addToCart(${p.id})">+ ใส่ตะกร้า</button>
-          </div>
-        `).join('')}
-      `);
+          `).join('')}
+        `);
+      });
     }
 
-    /* -----------------------------------------------------
-      ปรับแต่งระบบตะกร้า, จัดส่ง และการชำระเงินให้ละลาย & มีลูกเล่น
-    ----------------------------------------------------- */
     function setPayType(type) {
       selectedPayType = type;
       document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
@@ -433,12 +593,12 @@
       if (type === 'qr') {
         box.innerHTML = `
           <div style="text-align:center;">
-            <p style="margin:4px 0;">สแกนเพื่อโอนเงิน ( PromptPay )</p>
-            <img src="https://img1.pic.in.th/images/199de2505b2701130cb85e9869bb014d.jpg" class="qr-img">
-            <div style="margin-top:8px;">ธ.กสิกรไทย <b>233-3456-713</b> <button class="copy-btn" onclick="navigator.clipboard.writeText('233-3456-713'); showToast('คัดลอกเลขบัญชีแล้ว!');">คัดลอก</button></div>
+            <p style="margin:4px 0; font-size:11px;">สแกนเพื่อโอนเงิน ( PromptPay )</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0981813465" class="qr-img" style="border-radius:8px;">
+            <div style="margin-top:8px; font-size:11px;">ธ.กสิกรไทย <b>098-1-81346-5</b> <button class="copy-btn" onclick="navigator.clipboard.writeText('0981813465'); showToast('คัดลอกเลขบัญชีแล้ว!');">คัดลอก</button></div>
             <div class="form-group" style="margin-top:10px;">
               <label>แนบสลิป/ระบุเวลาโอน</label>
-              <input type="text" id="paySlipInfo" placeholder="เช่น โอนแล้ว 14:30 น. / แนบลิงก์รูป">
+              <input type="text" id="paySlipInfo" placeholder="เช่น โอนแล้ว 14:30 น.">
             </div>
           </div>
         `;
@@ -466,98 +626,102 @@
     }
 
     function openCart() {
-      if (cart.length === 0) return openModal('<h3>🛒 ตะกร้าสินค้า</h3><p style="color:var(--muted)">ไม่มีสินค้าในตะกร้า</p>');
-      
-      const total = cart.reduce((sum, item) => {
-        const p = products.find(x => x.id === item.id);
-        return sum + (p ? p.price * item.qty : 0);
-      }, 0);
+      requireAuth(() => {
+        const cart = userCarts[currentUserEmail] || [];
+        const u = usersDB[currentUserEmail];
 
-      openModal(`
-        <h3 style="margin-top:0;">🛒 ตะกร้าสินค้า</h3>
-        <div style="max-height:180px; overflow-y:auto;">
-          ${cart.map(item => {
-            const p = products.find(x => x.id === item.id);
-            return `
-              <div class="cart-item">
-                <img src="${p.img}" class="cart-item-img">
-                <div class="cart-item-info">
-                  <div style="font-weight:600;">${p.name}</div>
-                  <div style="color:var(--gold)">฿${(p.price * item.qty).toLocaleString()}</div>
+        if (cart.length === 0) return openModal(`<h3>🛒 ตะกร้าสินค้า</h3><p style="color:var(--muted)">ไม่มีสินค้าในตะกร้าของคุณ</p>`);
+        
+        const total = cart.reduce((sum, item) => {
+          const p = products.find(x => x.id === item.id);
+          return sum + (p ? p.price * item.qty : 0);
+        }, 0);
+
+        openModal(`
+          <h3 style="margin-top:0;">🛒 ตะกร้าสินค้าของคุณ</h3>
+          <div style="max-height:180px; overflow-y:auto;">
+            ${cart.map(item => {
+              const p = products.find(x => x.id === item.id);
+              return `
+                <div class="cart-item">
+                  <img src="${p.img}" class="cart-item-img">
+                  <div class="cart-item-info">
+                    <div style="font-weight:600;">${p.name}</div>
+                    <div style="color:var(--gold)">฿${(p.price * item.qty).toLocaleString()}</div>
+                  </div>
+                  <div>
+                    <button class="cart-btn-qty" onclick="changeQty(${p.id}, -1)">-</button>
+                    <span style="margin:0 6px;">${item.qty}</span>
+                    <button class="cart-btn-qty" onclick="changeQty(${p.id}, 1)">+</button>
+                  </div>
                 </div>
-                <div>
-                  <button class="cart-btn-qty" onclick="changeQty(${p.id}, -1)">-</button>
-                  <span style="margin:0 6px;">${item.qty}</span>
-                  <button class="cart-btn-qty" onclick="changeQty(${p.id}, 1)">+</button>
-                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <hr style="border:0; border-top:1px solid var(--glass-border); margin:15px 0;">
+
+          <div class="form-group">
+            <label>🚚 เลือกรูปแบบการขนส่ง & คำนวณวันรับสินค้า</label>
+            <select id="shippingCarrier" onchange="updateCarrierShipping()">
+              <option value="flash">Flash Express (กทม. 1-2 วัน / ตจว. 2-3 วัน)</option>
+              <option value="express">Kerry Express [ส่งด่วนพิเศษ] (รับวันถัดไป)</option>
+              <option value="ems">ไปรษณีย์ไทย EMS (2-3 วัน)</option>
+            </select>
+          </div>
+
+          <div class="ship-card">
+            <span>📅 คาดว่าจะได้รับสินค้าประมาณ:</span>
+            <b id="estDateText" style="color:var(--cyan);">${calculateDeliveryEstimate(2)}</b>
+          </div>
+
+          <div class="form-group" style="margin-top:12px;">
+            <input type="text" id="custName" value="${u.name}" placeholder="ชื่อ-นามสกุล ผู้รับ">
+          </div>
+          <div class="form-group">
+            <input type="text" id="custPhone" value="${u.phone}" placeholder="เบอร์โทรศัพท์ติดต่อ">
+          </div>
+          <div class="form-group">
+            <input type="text" id="custAddress" value="${u.addr}" placeholder="ที่อยู่จัดส่งโดยละเอียด">
+          </div>
+
+          <label style="font-size:11px; color:var(--muted);">💳 เลือกช่องทางการชำระเงิน</label>
+          <div class="pay-tabs">
+            <div class="pay-tab active" onclick="setPayType('qr')">📲 สแกน QR Code</div>
+            <div class="pay-tab" onclick="setPayType('cod')">🚛 เก็บเงินปลายทาง</div>
+            <div class="pay-tab" onclick="setPayType('card')">💳 บัตรเครดิต</div>
+          </div>
+
+          <div id="payDetailBox" class="payment-box">
+            <div style="text-align:center;">
+              <p style="margin:4px 0; font-size:11px;">สแกนเพื่อโอนเงิน ( PromptPay )</p>
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=0981813465" class="qr-img" style="border-radius:8px;">
+              <div style="margin-top:8px; font-size:11px;">ธ.กสิกรไทย <b>098-1-81346-5</b> <button class="copy-btn" onclick="navigator.clipboard.writeText('0981813465'); showToast('คัดลอกเลขบัญชีแล้ว!');">คัดลอก</button></div>
+              <div class="form-group" style="margin-top:10px;">
+                <label>แนบสลิป/ระบุเวลาโอน</label>
+                <input type="text" id="paySlipInfo" placeholder="เช่น โอนแล้ว 14:30 น.">
               </div>
-            `;
-          }).join('')}
-        </div>
-
-        <hr style="border:0; border-top:1px solid var(--glass-border); margin:15px 0;">
-
-        <!-- ตัวเลือกจัดส่งขั้นสูง -->
-        <div class="form-group">
-          <label>🚚 เลือกรูปแบบการขนส่ง & คำนวณวันรับสินค้า</label>
-          <select id="shippingCarrier" onchange="updateCarrierShipping()">
-            <option value="flash">Flash Express (กทม. 1-2 วัน / ตจว. 2-3 วัน)</option>
-            <option value="express">Kerry Express [ส่งด่วนพิเศษ] (รับวันถัดไป)</option>
-            <option value="ems">ไปรษณีย์ไทย EMS (2-3 วัน)</option>
-          </select>
-        </div>
-
-        <div class="ship-card">
-          <span>📅 คาดว่าจะได้รับสินค้าประมาณ:</span>
-          <b id="estDateText" style="color:var(--cyan);">${calculateDeliveryEstimate(2)}</b>
-        </div>
-
-        <!-- ฟอร์มชื่อผู้รับ -->
-        <div class="form-group" style="margin-top:12px;">
-          <input type="text" id="custName" placeholder="ชื่อ-นามสกุล ผู้รับ">
-        </div>
-        <div class="form-group">
-          <input type="text" id="custPhone" placeholder="เบอร์โทรศัพท์ติดต่อ">
-        </div>
-        <div class="form-group">
-          <input type="text" id="custAddress" placeholder="ที่อยู่จัดส่งโดยละเอียด">
-        </div>
-
-        <!-- แท็บเลือกการชำระเงิน -->
-        <label style="font-size:11px; color:var(--muted);">💳 เลือกช่องทางการชำระเงิน</label>
-        <div class="pay-tabs">
-          <div class="pay-tab active" onclick="setPayType('qr')">📲 สแกน QR Code</div>
-          <div class="pay-tab" onclick="setPayType('cod')">🚛 เก็บเงินปลายทาง</div>
-          <div class="pay-tab" onclick="setPayType('card')">💳 บัตรเครดิต</div>
-        </div>
-
-        <div id="payDetailBox" class="payment-box" style="margin-top:0;">
-          <div style="text-align:center;">
-            <p style="margin:4px 0; font-size:11px;">สแกนเพื่อโอนเงิน ( PromptPay )</p>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=0981813465" class="qr-img">
-            <div style="margin-top:8px; font-size:11px;">ธ.กสิกรไทย <b>098-1-81346-5</b> <button class="copy-btn" onclick="navigator.clipboard.writeText('0981813465'); showToast('คัดลอกเลขบัญชีแล้ว!');">คัดลอก</button></div>
-            <div class="form-group" style="margin-top:10px;">
-              <label>แนบสลิป/ระบุเวลาโอน</label>
-              <input type="text" id="paySlipInfo" placeholder="เช่น โอนแล้ว 14:30 น. / แนบลิงก์รูป">
             </div>
           </div>
-        </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
-          <div>ราคารวมทั้งสิ้น:</div>
-          <div style="font-size:22px; font-weight:bold; color:var(--gold);">฿${total.toLocaleString()}</div>
-        </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+            <div>ราคารวมทั้งสิ้น:</div>
+            <div style="font-size:22px; font-weight:bold; color:var(--gold);">฿${total.toLocaleString()}</div>
+          </div>
 
-        <button class="btn btn-add" style="width:100%; padding:12px; margin-top:12px; font-size:14px;" onclick="checkout()">✅ ยืนยันสั่งซื้อสินค้า</button>
-      `);
+          <button class="btn btn-add" style="width:100%; padding:12px; margin-top:12px; font-size:14px;" onclick="checkout()">✅ ยืนยันสั่งซื้อสินค้า</button>
+        `);
+      });
     }
 
     function changeQty(id, delta) {
+      let cart = userCarts[currentUserEmail] || [];
       const item = cart.find(c => c.id === id);
       if (item) {
         item.qty += delta;
-        if (item.qty <= 0) cart = cart.filter(c => c.id !== id);
+        if (item.qty <= 0) userCarts[currentUserEmail] = cart.filter(c => c.id !== id);
       }
+      saveDB();
       updateCartBadge();
       openCart();
     }
@@ -575,21 +739,24 @@
 
       const orderObj = {
         id: "ORD" + Date.now().toString().slice(-6),
+        userEmail: currentUserEmail, // ผูกกับ Email ผู้ใช้งานอย่างถูกต้อง
         date: new Date().toLocaleString('th-TH'),
         customer: { name, phone, addr },
-        items: [...cart],
+        items: [...userCarts[currentUserEmail]],
         payType: selectedPayType,
         slipInfo: slip,
         carrier: carrier.toUpperCase(),
         tracking: trackNo,
-        total: cart.reduce((s, i) => s + (products.find(x => x.id === i.id)?.price || 0) * i.qty, 0)
+        status: "รอตรวจสอบ",
+        total: userCarts[currentUserEmail].reduce((s, i) => s + (products.find(x => x.id === i.id)?.price || 0) * i.qty, 0)
       };
 
       orders.unshift(orderObj);
       localStorage.setItem('revo_orders', JSON.stringify(orders));
       document.getElementById('adminBadge').innerText = orders.length;
 
-      cart = [];
+      userCarts[currentUserEmail] = [];
+      saveDB();
       updateCartBadge();
 
       openModal(`
@@ -599,7 +766,7 @@
           <p style="color:var(--cyan); font-size:13px;">เลขที่คำสั่งซื้อ: #${orderObj.id}</p>
           <div class="ship-card" style="flex-direction:column; align-items:flex-start; gap:6px; margin:15px 0; text-align:left;">
             <div>🚚 ขนส่ง: <b>${orderObj.carrier}</b></div>
-            <div>📦 พัสดุ Tracking (จำลอง): <b style="color:var(--gold);">${trackNo}</b></div>
+            <div>📦 พัสดุ Tracking: <b style="color:var(--gold);">${trackNo}</b></div>
             <div>📅 คาดว่าถึงวันที่: <b>${calculateDeliveryEstimate()}</b></div>
           </div>
           <button class="btn btn-detail" style="width:100%; padding:10px;" onclick="closeModal()">ตกลง</button>
@@ -607,28 +774,91 @@
       `);
     }
 
+    function openOrderHistory() {
+      requireAuth(() => {
+        const myOrders = orders.filter(o => o.userEmail === currentUserEmail);
+        openModal(`
+          <h3>📦 ประวัติการสั่งซื้อของคุณ</h3>
+          <div style="max-height:350px; overflow-y:auto;">
+            ${myOrders.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีประวัติการสั่งซื้อ</p>' : myOrders.map(o => {
+              let statusClass = 'status-pending';
+              if(o.status === 'กำลังจัดส่ง' || o.status === 'จัดส่งสำเร็จ') statusClass = 'status-shipped';
+              if(o.status === 'เตรียมพัสดุ') statusClass = 'status-processing';
+              if(o.status === 'ยกเลิก') statusClass = 'status-cancelled';
+
+              return `
+                <div class="admin-order-card" style="border-left-color: var(--purple);">
+                  <div class="admin-order-header">
+                    <b>#${o.id} (${o.date})</b>
+                    <span class="status-badge ${statusClass}">${o.status}</span>
+                  </div>
+                  <div><b>ยอดชำระ:</b> <span style="color:var(--gold)">฿${o.total.toLocaleString()}</span></div>
+                  <div><b>ขนส่ง:</b> ${o.carrier} | Tracking: <b style="color:var(--cyan)">${o.tracking}</b></div>
+                  <div style="margin-top:6px; color:var(--muted); font-size:11px;">
+                    รายการ: ${o.items.map(i => {
+                      const p = products.find(x => x.id === i.id);
+                      return `${p ? p.name : ''} (x${i.qty})`;
+                    }).join(', ')}
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `);
+      });
+    }
+
     function openAdminDashboard() {
       openModal(`
-        <h3>🛠️ ระบบหลังบ้าน (รายการสั่งซื้อ)</h3>
-        <div style="max-height:350px; overflow-y:auto;">
+        <h3>🛠️ ระบบหลังบ้าน - บริหารจัดการออเดอร์</h3>
+        <div style="max-height:380px; overflow-y:auto;">
           ${orders.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการสั่งซื้อเข้ามา</p>' : orders.map(o => `
             <div class="admin-order-card">
               <div class="admin-order-header">
                 <b>#${o.id} (${o.date})</b>
                 <span style="color:var(--gold)">฿${o.total.toLocaleString()}</span>
               </div>
-              <div><b>ผู้สั่ง:</b> ${o.customer.name} (${o.customer.phone})</div>
+              <div><b>ผู้สั่ง:</b> ${o.customer.name} (${o.customer.phone}) <span style="color:var(--cyan)">[${o.userEmail}]</span></div>
               <div><b>ที่อยู่:</b> ${o.customer.addr}</div>
               <div><b>การชำระ:</b> ${o.payType.toUpperCase()} | <b>สลิป/ข้อมูล:</b> ${o.slipInfo}</div>
-              <div><b>การจัดส่ง:</b> ${o.carrier} | Tracking: <span style="color:var(--cyan)">${o.tracking}</span></div>
+              
+              <hr style="border:0; border-top:1px dashed var(--glass-border); margin:8px 0;">
+              
+              <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                <div style="flex:1;">
+                  <label style="font-size:10px; color:var(--muted);">อัปเดตสถานะ:</label>
+                  <select id="admStatus_${o.id}" style="padding:4px; font-size:11px; background:#000; color:#fff; border-radius:6px; border:1px solid var(--glass-border);">
+                    <option value="รอตรวจสอบ" ${o.status === 'รอตรวจสอบ' ? 'selected' : ''}>รอตรวจสอบ</option>
+                    <option value="เตรียมพัสดุ" ${o.status === 'เตรียมพัสดุ' ? 'selected' : ''}>เตรียมพัสดุ</option>
+                    <option value="กำลังจัดส่ง" ${o.status === 'กำลังจัดส่ง' ? 'selected' : ''}>กำลังจัดส่ง</option>
+                    <option value="จัดส่งสำเร็จ" ${o.status === 'จัดส่งสำเร็จ' ? 'selected' : ''}>จัดส่งสำเร็จ</option>
+                    <option value="ยกเลิก" ${o.status === 'ยกเลิก' ? 'selected' : ''}>ยกเลิก</option>
+                  </select>
+                </div>
+                <div style="flex:1.2;">
+                  <label style="font-size:10px; color:var(--muted);">เลข Tracking:</label>
+                  <input type="text" id="admTrack_${o.id}" value="${o.tracking}" style="padding:4px; font-size:11px; background:#000; color:#fff; border-radius:6px; border:1px solid var(--glass-border); width:100%;">
+                </div>
+                <button class="copy-btn" style="height:28px; margin-top:14px;" onclick="updateOrderStatus('${o.id}')">💾 บันทึก</button>
+              </div>
             </div>
           `).join('')}
         </div>
       `);
     }
 
-    // Initialize Page
-    renderProducts();
+    function updateOrderStatus(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (order) {
+        order.status = document.getElementById(`admStatus_${orderId}`).value;
+        order.tracking = document.getElementById(`admTrack_${orderId}`).value.trim();
+        localStorage.setItem('revo_orders', JSON.stringify(orders));
+        showToast(`อัปเดตออเดอร์ #${orderId} เรียบร้อยแล้ว`);
+      }
+    }
+
+    // Initialize System
+    renderAuthUI();
     document.getElementById('adminBadge').innerText = orders.length;
   </script>
 </body>
