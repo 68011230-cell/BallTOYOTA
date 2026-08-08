@@ -71,7 +71,7 @@
     .btn-wishlist:hover { background: rgba(255, 0, 85, 0.2); border-color: var(--red); }
     .btn-history { background: rgba(139, 92, 246, 0.2); border: 1px solid var(--purple); color: #c4b5fd; }
     .btn-history:hover { background: var(--purple); color: #fff; }
-    .btn-admin { background: linear-gradient(135deg, var(--purple), #4f46e5); display: none; }
+    .btn-admin { background: linear-gradient(135deg, var(--purple), #4f46e5); display: flex !important; }
     .btn-cart { background: linear-gradient(135deg, var(--red), #c0392b); box-shadow: 0 4px 20px rgba(255, 0, 85, 0.4); }
     .btn-cart:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255, 0, 85, 0.6); }
 
@@ -315,6 +315,9 @@
       const area = document.getElementById('userNavArea');
       const adminBtn = document.getElementById('adminBtn');
 
+      // แสดงปุ่มหลังบ้านเสมอ
+      if (adminBtn) adminBtn.style.display = 'flex';
+
       if (user) {
         currentUser = user;
         const userDoc = await db.collection('users').doc(user.uid).get();
@@ -333,19 +336,12 @@
           <div class="user-profile-tag">👤 ${currentUserProfile.name}</div>
           <button class="btn-act btn-logout" onclick="logout()">ออกจากระบบ</button>
         `;
-
-        if (currentUserProfile.role === 'admin') {
-          adminBtn.style.display = 'flex';
-        } else {
-          adminBtn.style.display = 'none';
-        }
       } else {
         currentUser = null;
         currentUserProfile = null;
         userCart = [];
         userWishlist = [];
         area.innerHTML = `<button class="btn-act btn-auth" onclick="openLoginModal()">🔑 เข้าสู่ระบบ / สมัครสมาชิก</button>`;
-        adminBtn.style.display = 'none';
       }
 
       updateCartBadge();
@@ -480,12 +476,11 @@
     }
 
     function verifyAdminAndOpen() {
-      if (!currentUser || currentUserProfile?.role !== 'admin') {
-        const pin = prompt("🔐 กรุณากรอก รหัส PIN เจ้าของร้าน เพื่อเข้าสู่ระบบหลังบ้าน:");
-        if (pin === ADMIN_PIN) openAdminDashboard();
-        else if (pin !== null) alert("❌ รหัส PIN ไม่ถูกต้อง!");
-      } else {
+      const pin = prompt("🔐 กรุณากรอก รหัส PIN เจ้าของร้าน เพื่อเข้าสู่ระบบหลังบ้าน:");
+      if (pin === ADMIN_PIN) {
         openAdminDashboard();
+      } else if (pin !== null) {
+        alert("❌ รหัส PIN ไม่ถูกต้อง!");
       }
     }
 
