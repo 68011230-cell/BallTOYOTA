@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TOYOTA HILUX REVO 2018 - คลังอะไหล่แท้ระดับพรีเมียม</title>
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Firebase SDKs (v10 Compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
   <style>
     :root {
       --bg: #05070f;
@@ -178,7 +184,6 @@
       </div>
     </div>
     <div class="header-actions">
-      <!-- ส่วนแสดงสถานะสมาชิก / ปุ่มเข้าสู่ระบบ -->
       <div id="userNavArea" style="display:flex; align-items:center; gap:8px;"></div>
 
       <div class="search-box">
@@ -244,22 +249,32 @@
   </footer>
 
   <script>
+    // =========================================================================
+    // ⚙️ นำคีย์ Firebase จากโปรเจกต์ของคุณมาวางเรียบร้อยแล้ว
+    // =========================================================================
+    const firebaseConfig = {
+      apiKey: "AIzaSyAWqaAeK1vw_iQilFJVZ7VL9nhlGC4bGIQ",
+      authDomain: "thanakrit-shop.firebaseapp.com",
+      projectId: "thanakrit-shop",
+      storageBucket: "thanakrit-shop.firebasestorage.app",
+      messagingSenderId: "778054535686",
+      appId: "1:778054535686:web:3b829ea1a77bb808c45187",
+      measurementId: "G-NCJ5QZJF7Z"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
     const fallbackImg = 'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=500&auto=format&fit=crop';
     const ADMIN_PIN = "1234";
 
-    // --- ระบบบริหารจัดการผู้ใช้ (User Authentication & Database) ---
-    let usersDB = JSON.parse(localStorage.getItem('revo_users_db')) || {
-      "a@gmail.com": { name: "นาย A (สมชาย)", pass: "1234", phone: "081-111-1111", addr: "123 กทม.", role: "customer" },
-      "b@gmail.com": { name: "นาย B (สมศักดิ์)", pass: "1234", phone: "082-222-2222", addr: "456 นนทบุรี", role: "customer" },
-      "admin@gmail.com": { name: "ผู้ดูแลระบบ (Admin)", pass: "1234", phone: "098-181-3465", addr: "ร้านอะไหล่ Revo", role: "admin" }
-    };
-    
-    let currentUserEmail = localStorage.getItem('revo_current_user') || null;
-
-    // ข้อมูลจำลองตระกร้าและรายการโปรดที่แยกตาม User Email
-    let userCarts = JSON.parse(localStorage.getItem('revo_carts_db')) || {};
-    let userWishlists = JSON.parse(localStorage.getItem('revo_wishlists_db')) || {};
-    let orders = JSON.parse(localStorage.getItem('revo_orders')) || [];
+    let currentUser = null;
+    let currentUserProfile = null;
+    let userCart = [];
+    let userWishlist = [];
+    let ordersList = [];
     let selectedPayType = 'qr';
 
     const products = [
@@ -295,38 +310,61 @@
       { id: 130, category: "body", name: "แผ่นกันกระแทกใต้ห้องเครื่องยนต์ (Skid Plate)", price: 2800, badge: "Rally Red", compat: "Revo 2018 Prerunner / 4WD", img: "https://img1.pic.in.th/images/2905b1f4d61588825d.jpg", desc: "คำแนะนำช่าง: เหล็กอบสีแดงพาวเดอร์โค้ด หนา 4 มม. ป้องกันอ่างน้ำมันเครื่องและเกียร์ยามลุยโขดหินหรือทางออฟโรด" }
     ];
 
-    function saveDB() {
-      localStorage.setItem('revo_users_db', JSON.stringify(usersDB));
-      localStorage.setItem('revo_carts_db', JSON.stringify(userCarts));
-      localStorage.setItem('revo_wishlists_db', JSON.stringify(userWishlists));
-      if (currentUserEmail) localStorage.setItem('revo_current_user', currentUserEmail);
-      else localStorage.removeItem('revo_current_user');
-    }
-
-    function renderAuthUI() {
+    // --- ระบบจำ Session สมาชิกและดึงข้อมูลจาก Firebase Cloud ---
+    auth.onAuthStateChanged(async (user) => {
       const area = document.getElementById('userNavArea');
       const adminBtn = document.getElementById('adminBtn');
 
-      if (currentUserEmail && usersDB[currentUserEmail]) {
-        const user = usersDB[currentUserEmail];
+      if (user) {
+        currentUser = user;
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        
+        if (userDoc.exists) {
+          currentUserProfile = userDoc.data();
+          userCart = currentUserProfile.cart || [];
+          userWishlist = currentUserProfile.wishlist || [];
+        } else {
+          currentUserProfile = { name: user.email.split('@')[0], phone: '', addr: '', role: 'customer' };
+          userCart = [];
+          userWishlist = [];
+        }
+
         area.innerHTML = `
-          <div class="user-profile-tag">👤 ${user.name}</div>
+          <div class="user-profile-tag">👤 ${currentUserProfile.name}</div>
           <button class="btn-act btn-logout" onclick="logout()">ออกจากระบบ</button>
         `;
-        if (user.role === 'admin') {
+
+        if (currentUserProfile.role === 'admin') {
           adminBtn.style.display = 'flex';
         } else {
           adminBtn.style.display = 'none';
         }
       } else {
-        area.innerHTML = `
-          <button class="btn-act btn-auth" onclick="openLoginModal()">🔑 เข้าสู่ระบบ / สมัครสมาชิก</button>
-        `;
+        currentUser = null;
+        currentUserProfile = null;
+        userCart = [];
+        userWishlist = [];
+        area.innerHTML = `<button class="btn-act btn-auth" onclick="openLoginModal()">🔑 เข้าสู่ระบบ / สมัครสมาชิก</button>`;
         adminBtn.style.display = 'none';
       }
+
       updateCartBadge();
       updateWishlistBadge();
       renderProducts();
+      fetchOrders();
+    });
+
+    async function syncUserData() {
+      if (currentUser) {
+        await db.collection('users').doc(currentUser.uid).set({
+          name: currentUserProfile.name,
+          phone: currentUserProfile.phone,
+          addr: currentUserProfile.addr,
+          role: currentUserProfile.role || 'customer',
+          cart: userCart,
+          wishlist: userWishlist
+        }, { merge: true });
+      }
     }
 
     function openLoginModal() {
@@ -370,31 +408,29 @@
           <input type="text" id="regAddr" placeholder="บ้านเลขที่, ถนน, แขวง/ตำบล, เขต/อำเภอ, จังหวัด">
         </div>
         <div class="form-group">
-          <label>รหัสผ่าน</label>
+          <label>รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
           <input type="password" id="regPass" placeholder="ตั้งรหัสผ่าน">
         </div>
         <button class="btn btn-add" style="width:100%; padding:10px;" onclick="handleRegister()">ยืนยันสมัครสมาชิก</button>
       `);
     }
 
-    function handleLogin() {
+    async function handleLogin() {
       const email = document.getElementById('loginEmail').value.trim();
       const pass = document.getElementById('loginPass').value.trim();
 
       if (!email || !pass) return alert("กรุณากรอกอีเมลและรหัสผ่าน");
 
-      if (usersDB[email] && usersDB[email].pass === pass) {
-        currentUserEmail = email;
-        saveDB();
-        renderAuthUI();
+      try {
+        await auth.signInWithEmailAndPassword(email, pass);
         closeModal();
-        showToast(`ยินดีต้อนรับคุณ ${usersDB[email].name}`);
-      } else {
-        alert("❌ อีเมลหรือรหัสผ่านไม่ถูกต้อง");
+        showToast("เข้าสู่ระบบสำเร็จ!");
+      } catch (err) {
+        alert("❌ เข้าสู่ระบบไม่สำเร็จ: " + err.message);
       }
     }
 
-    function handleRegister() {
+    async function handleRegister() {
       const name = document.getElementById('regName').value.trim();
       const email = document.getElementById('regEmail').value.trim();
       const phone = document.getElementById('regPhone').value.trim();
@@ -403,25 +439,25 @@
 
       if (!name || !email || !phone || !addr || !pass) return alert("กรุณากรอกข้อมูลให้ครบถ้วน");
 
-      if (usersDB[email]) return alert("❌ อีเมลนี้เคยลงทะเบียนสมัครสมาชิกแล้ว");
-
-      usersDB[email] = { name, pass, phone, addr, role: "customer" };
-      currentUserEmail = email;
-      saveDB();
-      renderAuthUI();
-      closeModal();
-      showToast("สมัครสมาชิกและเข้าสู่ระบบเรียบร้อยแล้ว!");
+      try {
+        const res = await auth.createUserWithEmailAndPassword(email, pass);
+        await db.collection('users').doc(res.user.uid).set({
+          name, phone, addr, role: "customer", cart: [], wishlist: []
+        });
+        closeModal();
+        showToast("สมัครสมาชิกสำเร็จ!");
+      } catch (err) {
+        alert("❌ ลงทะเบียนไม่สำเร็จ: " + err.message);
+      }
     }
 
-    function logout() {
-      currentUserEmail = null;
-      saveDB();
-      renderAuthUI();
+    async function logout() {
+      await auth.signOut();
       showToast("ออกจากระบบเรียบร้อย");
     }
 
     function requireAuth(callback) {
-      if (!currentUserEmail) {
+      if (!currentUser) {
         alert("🔒 กรุณาเข้าสู่ระบบสมาชิกก่อนทำรายการ");
         openLoginModal();
         return false;
@@ -444,7 +480,7 @@
     }
 
     function verifyAdminAndOpen() {
-      if (!currentUserEmail || usersDB[currentUserEmail]?.role !== 'admin') {
+      if (!currentUser || currentUserProfile?.role !== 'admin') {
         const pin = prompt("🔐 กรุณากรอก รหัส PIN เจ้าของร้าน เพื่อเข้าสู่ระบบหลังบ้าน:");
         if (pin === ADMIN_PIN) openAdminDashboard();
         else if (pin !== null) alert("❌ รหัส PIN ไม่ถูกต้อง!");
@@ -468,9 +504,8 @@
     function renderProducts(items = products) {
       const grid = document.getElementById("productsGrid");
       if (!grid) return;
-      const wishlist = currentUserEmail ? (userWishlists[currentUserEmail] || []) : [];
       grid.innerHTML = items.map(p => {
-        const isFav = wishlist.includes(p.id);
+        const isFav = userWishlist.includes(p.id);
         const safeTitle = p.name.replace(/'/g, "\\'");
         return `
           <div class="card">
@@ -509,12 +544,10 @@
     }
 
     function toggleWishlist(id) {
-      requireAuth(() => {
-        if (!userWishlists[currentUserEmail]) userWishlists[currentUserEmail] = [];
-        let wishlist = userWishlists[currentUserEmail];
-        const idx = wishlist.indexOf(id);
-        if (idx > -1) wishlist.splice(idx, 1); else wishlist.push(id);
-        saveDB();
+      requireAuth(async () => {
+        const idx = userWishlist.indexOf(id);
+        if (idx > -1) userWishlist.splice(idx, 1); else userWishlist.push(id);
+        await syncUserData();
         updateWishlistBadge();
         renderProducts();
         showToast(idx > -1 ? "ลบออกจากรายการโปรด" : "เพิ่มเข้าโปรดเรียบร้อย");
@@ -522,25 +555,21 @@
     }
 
     function updateWishlistBadge() {
-      const count = currentUserEmail ? (userWishlists[currentUserEmail]?.length || 0) : 0;
-      document.getElementById('wishCount').innerText = count;
+      document.getElementById('wishCount').innerText = userWishlist.length;
     }
 
     function addToCart(id) {
-      requireAuth(() => {
-        if (!userCarts[currentUserEmail]) userCarts[currentUserEmail] = [];
-        let cart = userCarts[currentUserEmail];
-        const item = cart.find(c => c.id === id);
-        if (item) item.qty++; else cart.push({ id, qty: 1 });
-        saveDB();
+      requireAuth(async () => {
+        const item = userCart.find(c => c.id === id);
+        if (item) item.qty++; else userCart.push({ id, qty: 1 });
+        await syncUserData();
         updateCartBadge();
         showToast("เพิ่มลงในตะกร้าสินค้าแล้ว");
       });
     }
 
     function updateCartBadge() {
-      const cart = currentUserEmail ? (userCarts[currentUserEmail] || []) : [];
-      document.getElementById('cartCount').innerText = cart.reduce((s, c) => s + c.qty, 0);
+      document.getElementById('cartCount').innerText = userCart.reduce((s, c) => s + c.qty, 0);
     }
 
     function openModal(html) {
@@ -566,8 +595,7 @@
 
     function openWishlist() {
       requireAuth(() => {
-        const wishlist = userWishlists[currentUserEmail] || [];
-        const items = products.filter(p => wishlist.includes(p.id));
+        const items = products.filter(p => userWishlist.includes(p.id));
         openModal(`
           <h3>❤️ รายการที่ชอบของคุณ</h3>
           ${items.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการที่ชอบ</p>' : items.map(p => `
@@ -627,12 +655,9 @@
 
     function openCart() {
       requireAuth(() => {
-        const cart = userCarts[currentUserEmail] || [];
-        const u = usersDB[currentUserEmail];
-
-        if (cart.length === 0) return openModal(`<h3>🛒 ตะกร้าสินค้า</h3><p style="color:var(--muted)">ไม่มีสินค้าในตะกร้าของคุณ</p>`);
+        if (userCart.length === 0) return openModal(`<h3>🛒 ตะกร้าสินค้า</h3><p style="color:var(--muted)">ไม่มีสินค้าในตะกร้าของคุณ</p>`);
         
-        const total = cart.reduce((sum, item) => {
+        const total = userCart.reduce((sum, item) => {
           const p = products.find(x => x.id === item.id);
           return sum + (p ? p.price * item.qty : 0);
         }, 0);
@@ -640,7 +665,7 @@
         openModal(`
           <h3 style="margin-top:0;">🛒 ตะกร้าสินค้าของคุณ</h3>
           <div style="max-height:180px; overflow-y:auto;">
-            ${cart.map(item => {
+            ${userCart.map(item => {
               const p = products.find(x => x.id === item.id);
               return `
                 <div class="cart-item">
@@ -676,13 +701,13 @@
           </div>
 
           <div class="form-group" style="margin-top:12px;">
-            <input type="text" id="custName" value="${u.name}" placeholder="ชื่อ-นามสกุล ผู้รับ">
+            <input type="text" id="custName" value="${currentUserProfile.name || ''}" placeholder="ชื่อ-นามสกุล ผู้รับ">
           </div>
           <div class="form-group">
-            <input type="text" id="custPhone" value="${u.phone}" placeholder="เบอร์โทรศัพท์ติดต่อ">
+            <input type="text" id="custPhone" value="${currentUserProfile.phone || ''}" placeholder="เบอร์โทรศัพท์ติดต่อ">
           </div>
           <div class="form-group">
-            <input type="text" id="custAddress" value="${u.addr}" placeholder="ที่อยู่จัดส่งโดยละเอียด">
+            <input type="text" id="custAddress" value="${currentUserProfile.addr || ''}" placeholder="ที่อยู่จัดส่งโดยละเอียด">
           </div>
 
           <label style="font-size:11px; color:var(--muted);">💳 เลือกช่องทางการชำระเงิน</label>
@@ -714,19 +739,18 @@
       });
     }
 
-    function changeQty(id, delta) {
-      let cart = userCarts[currentUserEmail] || [];
-      const item = cart.find(c => c.id === id);
+    async function changeQty(id, delta) {
+      const item = userCart.find(c => c.id === id);
       if (item) {
         item.qty += delta;
-        if (item.qty <= 0) userCarts[currentUserEmail] = cart.filter(c => c.id !== id);
+        if (item.qty <= 0) userCart = userCart.filter(c => c.id !== id);
       }
-      saveDB();
+      await syncUserData();
       updateCartBadge();
       openCart();
     }
 
-    function checkout() {
+    async function checkout() {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const addr = document.getElementById('custAddress').value.trim();
@@ -736,47 +760,63 @@
       const carrier = document.getElementById('shippingCarrier').value;
       const slip = document.getElementById('paySlipInfo') ? document.getElementById('paySlipInfo').value : '-';
       const trackNo = "TH" + Math.floor(100000000 + Math.random() * 900000000);
+      const orderId = "ORD" + Date.now().toString().slice(-6);
 
       const orderObj = {
-        id: "ORD" + Date.now().toString().slice(-6),
-        userEmail: currentUserEmail, // ผูกกับ Email ผู้ใช้งานอย่างถูกต้อง
+        id: orderId,
+        uid: currentUser.uid,
+        userEmail: currentUser.email,
         date: new Date().toLocaleString('th-TH'),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         customer: { name, phone, addr },
-        items: [...userCarts[currentUserEmail]],
+        items: [...userCart],
         payType: selectedPayType,
         slipInfo: slip,
         carrier: carrier.toUpperCase(),
         tracking: trackNo,
         status: "รอตรวจสอบ",
-        total: userCarts[currentUserEmail].reduce((s, i) => s + (products.find(x => x.id === i.id)?.price || 0) * i.qty, 0)
+        total: userCart.reduce((s, i) => s + (products.find(x => x.id === i.id)?.price || 0) * i.qty, 0)
       };
 
-      orders.unshift(orderObj);
-      localStorage.setItem('revo_orders', JSON.stringify(orders));
-      document.getElementById('adminBadge').innerText = orders.length;
+      try {
+        await db.collection('orders').doc(orderId).set(orderObj);
+        userCart = [];
+        await syncUserData();
+        updateCartBadge();
 
-      userCarts[currentUserEmail] = [];
-      saveDB();
-      updateCartBadge();
-
-      openModal(`
-        <div style="text-align:center; padding:10px;">
-          <div style="font-size:45px;">🎉</div>
-          <h2>สั่งซื้อสำเร็จเรียบร้อย!</h2>
-          <p style="color:var(--cyan); font-size:13px;">เลขที่คำสั่งซื้อ: #${orderObj.id}</p>
-          <div class="ship-card" style="flex-direction:column; align-items:flex-start; gap:6px; margin:15px 0; text-align:left;">
-            <div>🚚 ขนส่ง: <b>${orderObj.carrier}</b></div>
-            <div>📦 พัสดุ Tracking: <b style="color:var(--gold);">${trackNo}</b></div>
-            <div>📅 คาดว่าถึงวันที่: <b>${calculateDeliveryEstimate()}</b></div>
+        openModal(`
+          <div style="text-align:center; padding:10px;">
+            <div style="font-size:45px;">🎉</div>
+            <h2>สั่งซื้อสำเร็จเรียบร้อย!</h2>
+            <p style="color:var(--cyan); font-size:13px;">เลขที่คำสั่งซื้อ: #${orderObj.id}</p>
+            <div class="ship-card" style="flex-direction:column; align-items:flex-start; gap:6px; margin:15px 0; text-align:left;">
+              <div>🚚 ขนส่ง: <b>${orderObj.carrier}</b></div>
+              <div>📦 พัสดุ Tracking: <b style="color:var(--gold);">${trackNo}</b></div>
+              <div>📅 คาดว่าถึงวันที่: <b>${calculateDeliveryEstimate()}</b></div>
+            </div>
+            <button class="btn btn-detail" style="width:100%; padding:10px;" onclick="closeModal()">ตกลง</button>
           </div>
-          <button class="btn btn-detail" style="width:100%; padding:10px;" onclick="closeModal()">ตกลง</button>
-        </div>
-      `);
+        `);
+      } catch (err) {
+        alert("❌ เกิดข้อผิดพลาดในการบันทึกคำสั่งซื้อ: " + err.message);
+      }
+    }
+
+    async function fetchOrders() {
+      try {
+        const snap = await db.collection('orders').get();
+        ordersList = snap.docs.map(doc => doc.data());
+        document.getElementById('adminBadge').innerText = ordersList.length;
+      } catch(e) {
+        console.log("Error loading orders", e);
+      }
     }
 
     function openOrderHistory() {
-      requireAuth(() => {
-        const myOrders = orders.filter(o => o.userEmail === currentUserEmail);
+      requireAuth(async () => {
+        const snap = await db.collection('orders').where('uid', '==', currentUser.uid).get();
+        const myOrders = snap.docs.map(d => d.data());
+
         openModal(`
           <h3>📦 ประวัติการสั่งซื้อของคุณ</h3>
           <div style="max-height:350px; overflow-y:auto;">
@@ -808,11 +848,12 @@
       });
     }
 
-    function openAdminDashboard() {
+    async function openAdminDashboard() {
+      await fetchOrders();
       openModal(`
         <h3>🛠️ ระบบหลังบ้าน - บริหารจัดการออเดอร์</h3>
         <div style="max-height:380px; overflow-y:auto;">
-          ${orders.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการสั่งซื้อเข้ามา</p>' : orders.map(o => `
+          ${ordersList.length === 0 ? '<p style="color:var(--muted)">ยังไม่มีรายการสั่งซื้อเข้ามา</p>' : ordersList.map(o => `
             <div class="admin-order-card">
               <div class="admin-order-header">
                 <b>#${o.id} (${o.date})</b>
@@ -847,19 +888,17 @@
       `);
     }
 
-    function updateOrderStatus(orderId) {
-      const order = orders.find(o => o.id === orderId);
-      if (order) {
-        order.status = document.getElementById(`admStatus_${orderId}`).value;
-        order.tracking = document.getElementById(`admTrack_${orderId}`).value.trim();
-        localStorage.setItem('revo_orders', JSON.stringify(orders));
+    async function updateOrderStatus(orderId) {
+      const status = document.getElementById(`admStatus_${orderId}`).value;
+      const tracking = document.getElementById(`admTrack_${orderId}`).value.trim();
+
+      try {
+        await db.collection('orders').doc(orderId).update({ status, tracking });
         showToast(`อัปเดตออเดอร์ #${orderId} เรียบร้อยแล้ว`);
+      } catch (err) {
+        alert("❌ ไม่สามารถอัปเดตออเดอร์ได้: " + err.message);
       }
     }
-
-    // Initialize System
-    renderAuthUI();
-    document.getElementById('adminBadge').innerText = orders.length;
   </script>
 </body>
 </html>
